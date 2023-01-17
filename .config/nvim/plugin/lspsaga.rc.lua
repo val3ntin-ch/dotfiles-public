@@ -1,11 +1,42 @@
 local status, saga = pcall(require, "lspsaga")
 if (not status) then return end
 
-saga.init_lsp_saga {
+saga.setup({
   server_filetype_map = {
     typescript = 'typescript'
-  }
-}
+  },
+    ui = {
+    -- currently only round theme
+    theme = 'round',
+    -- border type can be single,double,rounded,solid,shadow.
+    border = 'single',
+    winblend = 0,
+    expand = '',
+    collapse = '',
+    preview = ' ',
+    code_action = '💡',
+    diagnostic = '🐞',
+    incoming = ' ',
+    outgoing = ' ',
+    colors = {
+      --float window normal background color
+      normal_bg = '',
+      --title background color
+      title_bg = '#afd700',
+      red = '#e95678',
+      magenta = '#b33076',
+      orange = '#FF8700',
+      yellow = '#f7bb3b',
+      green = '#afd700',
+      cyan = '#36d0e0',
+      blue = '#61afef',
+      purple = '#CBA6F7',
+      white = '#d1d4cf',
+      black = '#1c1c19',
+    },
+    kind = {},
+  },
+})
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)
