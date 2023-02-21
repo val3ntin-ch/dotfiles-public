@@ -8,6 +8,7 @@ local function telescope_buffer_dir()
 end
 
 local fb_actions = require "telescope".extensions.file_browser.actions
+require 'telescope'.extensions.media_files.media_files()
 
 telescope.setup {
   defaults = {
@@ -36,6 +37,12 @@ telescope.setup {
           end
         },
       },
+      media_files = {
+
+        -- filetypes whitelist
+        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+        filetypes = { "png", "webp", "jpg", "jpeg", "pdf" },
+      }
     },
   },
 }

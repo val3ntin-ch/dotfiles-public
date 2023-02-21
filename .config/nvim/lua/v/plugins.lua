@@ -7,7 +7,6 @@ end
 vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
-
   use 'wbthomason/packer.nvim'
   use {
     'svrana/neosolarized.nvim',
@@ -37,6 +36,10 @@ packer.startup(function(use)
   use 'kyazdani42/nvim-web-devicons' -- File icons
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
+  -- png, jpeg etc
+
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-telescope/telescope-media-files.nvim'
 
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
