@@ -1,10 +1,53 @@
-# zsh — generated/sensitive files
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# ── Editor ────────────────────────────────────────────────────────────────────
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# ── zsh — generated / sensitive ───────────────────────────────────────────────
 .config/zsh/.zsh_history
 .config/zsh/.zcompdump*
+.config/zsh/.zsh_sessions/
+# machine-specific overrides — not committed
+.config/zsh/.zshrc.local
 
-# fish — runtime logs
+# ── fish — runtime / local overrides ──────────────────────────────────────────
 .config/fish/tmux-client-*.log
+# machine-specific overrides — not committed
+.config/fish/config-local.fish
 
-# tmux — plugin vendor code (managed by TPM) and session state
+# ── tmux — vendor code and runtime state ──────────────────────────────────────
+# managed by TPM: prefix+I to install on new machine
 .config/tmux/plugins/
+# runtime session snapshots
 .config/tmux/resurrect/
+
+# ── credentials / secrets ─────────────────────────────────────────────────────
+*.pem
+*.key
+*.p12
+*.pfx
+.netrc
+# GitHub CLI auth token
+.config/gh/hosts.yml
+# 1Password CLI session
+.config/op/
+**/.env
+**/.env.local
+**/.env.*.local
+*.secret
+*.secrets
+# may contain registry auth tokens
+.npmrc
+.pypirc
+
+# ── local tool state ──────────────────────────────────────────────────────────
+.config/zsh/zcompcache/
