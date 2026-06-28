@@ -151,7 +151,26 @@ time_format = "%H:%M"
 style = "bold fg:overlay1"
 format = '[$time]($style)'
 
-# ── Catppuccin Mocha palette ──────────────────────────────────────────────────
+# ── Neon Cyberpunk palette (testing) ─────────────────────────────────────────
+[palettes.neon_cyberpunk]
+cyan = "#00F5FF"
+blue = "#00A3FF"
+magenta = "#FF00FF"
+purple = "#BD00FF"
+green = "#7CFF00"
+yellow = "#FFE600"
+red = "#FF3131"
+white = "#F8F8F2"
+gray = "#6C7086"
+black = "#11111B"
+# mapped to catppuccin names used in module styles
+peach = "#FF6D00"
+mauve = "#BD00FF"
+lavender = "#00A3FF"
+overlay1 = "#6C7086"
+crust = "#11111B"
+
+# ── Catppuccin Mocha palette (swap palette = above to restore) ────────────────
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
