@@ -8,7 +8,7 @@ command_timeout = 1000
 format = """$username$hostname$directory$character"""
 
 # right: infra context → git → languages → duration
-right_format = """$git_branch$git_status$docker_context$kubernetes$aws$conda$package$nodejs$bun$swift$dart$rust$golang$python$java$kotlin$terraform$cmd_duration"""
+right_format = """$git_branch$git_status$docker_context$kubernetes$aws$conda$package$nodejs$bun$swift$dart$rust$golang$python$java$kotlin$terraform$cmd_duration$time"""
 
 # ── Shell context (SSH / root only) ───────────────────────────────────────────
 [username]
@@ -144,6 +144,12 @@ vimcmd_visual_symbol = '[❮](bold fg:yellow)'
 min_time = 2000
 format = '[$duration]($style) '
 style = 'bold yellow'
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "bold fg:overlay1"
+format = '[$time]($style)'
 
 # ── Catppuccin Mocha palette ──────────────────────────────────────────────────
 [palettes.catppuccin_mocha]
