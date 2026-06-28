@@ -1,0 +1,120 @@
+# $ZDOTDIR/.zsh_plugins.txt
+# ══════════════════════════════════════════════════════════════════════════════
+# Antidote plugin list — one plugin per line, git clone URL implied from
+# "author/repo" shorthand (GitHub). Antidote compiles this into a static
+# .zsh_plugins.zsh that just sources each plugin — no overhead after first run.
+#
+# FEYNMAN — what does each plugin actually do and why is it here?
+#
+# Syntax:
+#   author/repo                     load the default plugin file
+#   author/repo kind:fpath          add to $fpath only (for completions)
+#   author/repo path:subdir         load from subdir (OMZ plugins)
+#   author/repo branch:next         pin a branch
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ── 1. COMPLETIONS LIBRARY ────────────────────────────────────────────────
+# Provides completion definitions for ~100 tools that don't ship their own.
+# Examples: docker-compose, tmuxinator, pip, rustup, cargo, httpie...
+# kind:fpath = add to $fpath but don't source — compinit finds it automatically.
+# Must come BEFORE compinit runs (handled in .zshrc § 1 above antidote).
+zsh-users/zsh-completions kind:fpath path:src
+
+# ── 2. SYNTAX HIGHLIGHTING ────────────────────────────────────────────────
+# Colors commands as-you-type: green = valid, red = not found.
+#
+# FEYNMAN — fast-syntax-highlighting vs zsh-syntax-highlighting:
+#
+# Your original setup used zsh-users/zsh-syntax-highlighting (the "classic" one).
+# We use zdharma-continuum/fast-syntax-highlighting (F-Sy-H) instead because:
+#   • 2-3x faster on long command lines (matters on slow machines)
+#   • More token types: brackets, regex, process substitutions, here-docs
+#   • Theme-able (we set FAST_HIGHLIGHT_STYLES in .zshrc to Catppuccin)
+#   • Active maintenance as of 2026
+#
+# If you hit any edge-case bugs with F-Sy-H, swap back by commenting this
+# line and uncommenting the zsh-users/zsh-syntax-highlighting line below.
+# Both work with fzf-tab and autosuggestions.
+zdharma-continuum/fast-syntax-highlighting
+# zsh-users/zsh-syntax-highlighting   # ← fallback if F-Sy-H causes issues
+
+# ── 3. AUTOSUGGESTIONS ────────────────────────────────────────────────────
+# Fish-style ghost text. Suggests the most recent matching history entry
+# in a faded color. Press → or Ctrl-F to accept, keep typing to ignore.
+zsh-users/zsh-autosuggestions
+
+# ── 4. HISTORY SUBSTRING SEARCH ───────────────────────────────────────────
+# Makes ↑/↓ search history for entries containing what you've already typed,
+# not just entries starting with it. Type "docker" then ↑ → cycles only
+# through commands containing "docker". Highlighted in green/red.
+# Must load AFTER fast-syntax-highlighting (they both manipulate the buffer).
+zsh-users/zsh-history-substring-search
+
+# ── 5. FZF-TAB ────────────────────────────────────────────────────────────
+# Replaces ZSH's completion menu with fzf. Tab → fzf picker with previews.
+# Multi-select with Shift-Tab. Switch groups with , and .
+# Must load AFTER compinit and AFTER fast-syntax-highlighting.
+Aloxaf/fzf-tab
+
+# ── 6. VI MODE ────────────────────────────────────────────────────────────
+# Full vim keybindings in the shell. Esc (or jk) → normal mode.
+# Features the built-in `bindkey -v` lacks:
+#   • Cursor shape changes (beam ↔ block ↔ underline)
+#   • Text objects: ciw, da", yis, etc.
+#   • Surround: ys, cs, ds
+#   • Doesn't break fzf bindings (provides zvm_after_init hook)
+#   • Fix for slow ESC detection
+jeffreytse/zsh-vi-mode
+
+# ── 7. AUTOPAIR ────────────────────────────────────────────────────────────
+# Auto-closes (), [], {}, "", '', ``, <>
+# Backspace on empty pair deletes both. Won't double-close if you type the
+# closing char manually. Zero config needed.
+hlissner/zsh-autopair
+
+# ── 8. SYSTEM CLIPBOARD ────────────────────────────────────────────────────
+# Makes vi-mode yank/delete/paste interact with the SYSTEM clipboard.
+# In normal mode: y copies to clipboard, p pastes from clipboard.
+# In insert mode: Ctrl-O copies the current command line.
+# Auto-detects pbcopy (macOS), xclip/xsel (X11), wl-copy (Wayland).
+kutsan/zsh-system-clipboard
+
+# ── 9. YOU-SHOULD-USE ─────────────────────────────────────────────────────
+# After you run a command, if an alias exists for it, the plugin reminds you.
+# Trains you to actually use the aliases you've defined instead of forgetting.
+# Example: type `git status -sb` → "alias hint: gs → git status -sb"
+MichaelAquilina/zsh-you-should-use
+
+# ── 10. CD-GITROOT ────────────────────────────────────────────────────────
+# Adds `cdg` — jumps to the root of the current git repo instantly.
+# Useful when you're deep in src/components/ui/ and want the repo root.
+mollifier/cd-gitroot
+
+# ── 11. TMUX PLUGIN (OMZ) ─────────────────────────────────────────────────
+# From your original setup. Provides:
+#   • ta = tmux attach-session (with completion on session names)
+#   • ts = tmux new-session
+#   • tl = tmux list-sessions
+#   • tksv = tmux kill-server
+#   • tkss = tmux kill-session
+# Our aliases.zsh defines these too — OMZ plugin adds the completions.
+# Having both is safe; our aliases.zsh definitions win (loaded after this).
+ohmyzsh/ohmyzsh path:plugins/tmux
+
+# ── 13. COLORED-MAN-PAGES (OMZ) ───────────────────────────────────────────
+# Colors man pages using ANSI escapes. Pairs with bat's MANPAGER config.
+# Without this: monochrome wall of text. With this: section headers, flags,
+# and descriptions all get distinct colors.
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+
+# ── 14. DOTENV (OMZ) ──────────────────────────────────────────────────────
+# Auto-sources .env files when you cd into a directory.
+# Asks for confirmation the first time (security check — you approve new .env).
+# Useful for per-project environment variables (API keys, DATABASE_URL, etc.)
+ohmyzsh/ohmyzsh path:plugins/dotenv
+
+# ── 14. MAGIC ENTER ───────────────────────────────────────────────────────
+# Press Enter on an empty prompt → runs `eza -la` (or `git status` in a repo).
+# Saves typing the most common "what's here?" command.
+# Highly ergonomic for a daily workflow.
+ohmyzsh/ohmyzsh path:plugins/magic-enter
