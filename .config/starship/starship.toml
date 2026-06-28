@@ -4,9 +4,25 @@ add_newline = false
 palette = 'catppuccin_mocha'
 command_timeout = 1000
 
-format = """$directory$character"""
-right_format = """$git_branch$git_status$nodejs$rust$golang$python$java$kotlin$cmd_duration"""
+# username+hostname only appear on SSH or when root — silent otherwise
+format = """$username$hostname$directory$character"""
 
+# right: infra context → git → languages → duration
+right_format = """$git_branch$git_status$docker_context$kubernetes$aws$conda$package$nodejs$bun$swift$dart$rust$golang$python$java$kotlin$terraform$cmd_duration"""
+
+# ── Shell context (SSH / root only) ───────────────────────────────────────────
+[username]
+show_always = false
+style_user = "bold fg:blue"
+style_root = "bold fg:red"
+format = "[$user]($style)@"
+
+[hostname]
+ssh_only = true
+style = "bold fg:green"
+format = "[$hostname]($style) "
+
+# ── Directory ─────────────────────────────────────────────────────────────────
 [directory.substitutions]
 "Documents" = "󰈙 "
 "Downloads" = " "
@@ -14,6 +30,7 @@ right_format = """$git_branch$git_status$nodejs$rust$golang$python$java$kotlin$c
 "Pictures" = " "
 "Developer" = "󰲋 "
 
+# ── Git ───────────────────────────────────────────────────────────────────────
 [git_branch]
 symbol = ""
 format = '[$symbol$branch(:$remote_branch)]($style) '
@@ -31,24 +48,55 @@ staged = '+$count'
 deleted = '✘$count'
 style = 'bold yellow'
 
-[cmd_duration]
-min_time = 2000
-format = '[$duration]($style) '
-style = 'bold yellow'
+# ── Infra / cloud (only shows when context is active) ─────────────────────────
+[docker_context]
+symbol = " "
+style = "bold fg:blue"
+format = '[$symbol$context]($style) '
+only_with_files = false
 
-[character]
+[kubernetes]
 disabled = false
-success_symbol = '[❯](bold fg:green)'
-error_symbol = '[❯](bold fg:red)'
-vimcmd_symbol = '[❯v!❮](bold fg:green)'
-vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
-vimcmd_replace_symbol = '[❮](bold fg:lavender)'
-vimcmd_visual_symbol = '[❮](bold fg:yellow)'
+symbol = "󱃾 "
+style = "bold fg:blue"
+format = '[$symbol$context( \($namespace\))]($style) '
 
+[aws]
+symbol = "󰅟 "
+style = "bold fg:peach"
+format = '[$symbol$profile( \($region\))]($style) '
+
+[terraform]
+symbol = "󱁢 "
+style = "bold fg:mauve"
+format = '[$symbol$workspace]($style) '
+
+# ── Package version (shows in project root) ───────────────────────────────────
+[package]
+symbol = "󰏗 "
+style = "bold fg:peach"
+format = '[$symbol$version]($style) '
+
+# ── Languages (auto-hide — only show in relevant dirs) ────────────────────────
 [nodejs]
 symbol = ""
 style = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
+[bun]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
+[swift]
+symbol = ""
+style = "bg:peach"
+format = '[[ $symbol( $version) ](fg:crust bg:peach)]($style)'
+
+[dart]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
 
 [rust]
 symbol = ""
@@ -63,7 +111,13 @@ format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 [python]
 symbol = ""
 style = "bg:green"
-format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+format = '[[ $symbol $virtualenv( $version) ](fg:crust bg:green)]($style)'
+
+[conda]
+symbol = "󰾺 "
+style = "bold fg:green"
+format = '[$symbol$environment]($style) '
+ignore_base = false
 
 [java]
 symbol = " "
@@ -75,6 +129,23 @@ symbol = ""
 style = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
+# ── Prompt character ──────────────────────────────────────────────────────────
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❯v!❮](bold fg:green)'
+vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
+vimcmd_replace_symbol = '[❮](bold fg:lavender)'
+vimcmd_visual_symbol = '[❮](bold fg:yellow)'
+
+# ── Timing ────────────────────────────────────────────────────────────────────
+[cmd_duration]
+min_time = 2000
+format = '[$duration]($style) '
+style = 'bold yellow'
+
+# ── Catppuccin Mocha palette ──────────────────────────────────────────────────
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
