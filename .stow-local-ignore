@@ -1,0 +1,9 @@
+README.md
+.*\.md
+LICENSE
+CHANGELOG
+\.git
+\.gitignore
+CLAUDE.md
+\.claude
+\.stow-local-ignore

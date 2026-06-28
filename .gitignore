@@ -68,6 +68,11 @@
 # runtime session snapshots
 .config/tmux/resurrect/
 
+# ── yazi — installed plugins and flavors ──────────────────────────────────────
+# installed by: ya pkg install  (reads package.toml)
+.config/yazi/plugins/
+.config/yazi/flavors/
+
 # ── credentials / secrets ─────────────────────────────────────────────────────
 *.pem
 *.key

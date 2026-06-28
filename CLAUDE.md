@@ -8,16 +8,23 @@ Personal dotfiles managed with GNU Stow. Each subdirectory of `.config/` is a st
 
 ## Stow — how to apply changes
 
-```bash
-# Stow one package (creates ~/.config/<pkg> → ~/.dotfiles/.config/<pkg>)
-stow --dir=~/.dotfiles --target=$HOME --restow --no-folding .config/<pkg>
+Run from inside `~/.dotfiles`:
 
-# Or use the shell functions defined in fish/zsh:
-stow_pkg fish      # single package
-stow_all           # everything (skips alacritty/kitty/wezterm if binary absent)
+```bash
+cd ~/.dotfiles
+stow --target="$HOME" --restow .
 ```
 
-`--no-folding` is required — without it stow folds whole directories into a single symlink, which breaks adding new files later.
+This stows the entire dotfiles tree to `$HOME`. Stow uses directory folding by default — tool config dirs (fish, tmux, yazi, etc.) become symlinks rather than individual file links. This is intentional: it's simpler and works correctly.
+
+`.stow-local-ignore` at the root excludes `CLAUDE.md`, `README.md`, `.git`, etc.
+
+After fresh clone on a new machine:
+1. `cd ~/.dotfiles && stow --target="$HOME" --restow .`
+2. `fisher install` (reads fish_plugins, reinstalls all fish plugins)
+3. Install tmux plugins: open tmux, press `<prefix> I`
+4. `ya pkg install` (installs yazi plugins from package.toml)
+5. Antidote auto-compiles zsh plugins on first shell start
 
 ## Reloading configs without restarting
 
@@ -110,7 +117,7 @@ Applied at every layer: Ghostty terminal → fish `fish_color_*` vars / zsh F-Sy
 - Splits: `<prefix> v` (horizontal), `<prefix> g` (vertical)
 - Pane nav: `Ctrl+h/j/k/l` (no prefix, via vim-tmux-navigator)
 - Pane resize: `Ctrl+Shift+h/j/k/l` (no prefix)
-- Session picker: `<prefix> o` (SessionX with zoxide integration)
+- Session picker: `<prefix> o` (sesh — Go binary, zoxide-integrated, fzf popup)
 - Sessions persist via tmux-resurrect (saved to `.config/tmux/resurrect/`)
 
 ### Zsh-specific features not in fish
@@ -132,4 +139,6 @@ Applied at every layer: Ghostty terminal → fish `fish_color_*` vars / zsh F-Sy
 
 ## Tools expected on the machine
 
-`nvim`, `eza`, `bat`, `fd`, `rg`, `fzf`, `zoxide`, `delta` (`git-delta`), `vivid`, `starship`, `tmux`, `fnm`, `gh`, `stow`, `pnpm`
+`nvim`, `eza`, `bat`, `fd`, `rg`, `fzf`, `zoxide`, `delta` (`git-delta`), `vivid`, `starship`, `tmux`, `sesh`, `fnm`, `gh`, `stow`, `pnpm`
+
+`sesh` installs from a custom tap: `brew install joshmedeski/sesh/sesh`

@@ -1,0 +1,116 @@
+# yazi.toml — Yazi file manager configuration
+# Docs: https://yazi-rs.github.io/docs/configuration/yazi
+
+[manager]
+ratio          = [1, 2, 4]
+sort_by        = "alphabetical"
+sort_sensitive = false
+sort_reverse   = false
+sort_dirs_first = true
+linemode       = "size"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 5
+
+[preview]
+tab_size      = 2
+max_width     = 1200
+max_height    = 900
+image_delay   = 30
+image_filter  = "triangle"
+image_quality = 75
+
+[opener]
+edit = [
+  { run = 'nvim "$@"', block = true, desc = "Neovim" },
+]
+open = [
+  { run = 'open "$@"', orphan = true, desc = "System default" },
+]
+reveal = [
+  { run = 'open -R "$@"', orphan = true, desc = "Reveal in Finder" },
+]
+play = [
+  { run = 'mpv "$@"', orphan = true, desc = "mpv" },
+  { run = 'open "$@"', orphan = true, desc = "System default" },
+]
+extract = [
+  { run = 'ouch decompress "$@"', desc = "ouch" },
+]
+extract_here = [
+  { run = 'ouch decompress "$@" --dir .', desc = "Extract here" },
+]
+
+[open]
+rules = [
+  # Directories
+  { mime = "inode/directory", use = ["edit", "open"] },
+  # Text / code
+  { mime = "text/*", use = "edit" },
+  { mime = "*/json", use = "edit" },
+  { mime = "*/xml", use = "edit" },
+  { mime = "*/javascript", use = "edit" },
+  { mime = "*/typescript", use = "edit" },
+  # Images
+  { mime = "image/*", use = ["open", "reveal"] },
+  # Video
+  { mime = "video/*", use = ["play", "open"] },
+  # Audio
+  { mime = "audio/*", use = ["play", "open"] },
+  # PDF
+  { mime = "application/pdf", use = ["open", "edit"] },
+  # Archives
+  { mime = "application/zip",              use = ["extract", "open"] },
+  { mime = "application/x-tar",           use = ["extract", "open"] },
+  { mime = "application/gzip",            use = ["extract", "open"] },
+  { mime = "application/x-gzip",          use = ["extract", "open"] },
+  { mime = "application/x-bzip2",         use = ["extract", "open"] },
+  { mime = "application/x-7z-compressed", use = ["extract", "open"] },
+  { mime = "application/x-rar",           use = ["extract", "open"] },
+  # Default
+  { mime = "*", use = ["open", "edit"] },
+]
+
+[tasks]
+micro_workers    = 10
+macro_workers    = 25
+bizarre_retry    = 5
+image_alloc      = 536870912
+image_bound      = [0, 0]
+suppress_preload = false
+
+[plugin]
+prepend_fetchers = [
+  { url = "*",        run = "git",          group = "git"  },
+  { url = "*/",       run = "git",          group = "git"  },
+  { url = "local://*",  run = "mime-ext.local",  prio = "high", group = "mime" },
+  { url = "remote://*", run = "mime-ext.remote", prio = "high", group = "mime" },
+]
+preloaders = [
+  { mime = "image/*", run = "image" },
+  { mime = "video/*", run = "image" },
+]
+previewers = [
+  { url = "*/",               run = "folder", sync = true },
+  { mime = "text/*",          run = "code" },
+  { mime = "*/json",          run = "json" },
+  { mime = "*/xml",           run = "code" },
+  { mime = "image/*",         run = "image" },
+  { mime = "video/*",         run = "video" },
+  { mime = "audio/*",         run = "audio" },
+  { mime = "application/zip",              run = "archive" },
+  { mime = "application/x-tar",           run = "archive" },
+  { mime = "application/gzip",            run = "archive" },
+  { mime = "application/x-gzip",          run = "archive" },
+  { mime = "application/x-bzip2",         run = "archive" },
+  { mime = "application/x-7z-compressed", run = "archive" },
+  { mime = "application/x-rar",           run = "archive" },
+  { mime = "application/pdf",             run = "pdf" },
+  { mime = "*",               run = "file" },
+]
+
+[input]
+cursor_blink = false
+
+[log]
+enabled = false

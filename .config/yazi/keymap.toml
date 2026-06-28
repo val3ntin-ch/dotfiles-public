@@ -1,0 +1,32 @@
+# keymap.toml — Yazi keybindings
+# prepend_keymap runs BEFORE defaults (overrides), append_keymap runs AFTER
+
+[manager]
+prepend_keymap = [
+  # ── Plugins ───────────────────────────────────────────────────────────────
+  { on = "f",          run = "plugin smart-filter",                           desc = "Smart filter" },
+  { on = "F",          run = "plugin jump-to-char",                           desc = "Jump to char" },
+  { on = "gd",         run = "plugin diff",                                   desc = "Diff selected files" },
+  { on = "gx",         run = "plugin chmod",                                  desc = "Chmod selected" },
+
+  # ── Navigation ────────────────────────────────────────────────────────────
+  { on = "<C-h>", run = "hidden toggle",  desc = "Toggle hidden files" },
+
+  # ── Shell ─────────────────────────────────────────────────────────────────
+  { on = "!", run = "shell '$SHELL' --block", desc = "Open shell here" },
+]
+
+[tasks]
+prepend_keymap = []
+
+[select]
+prepend_keymap = []
+
+[input]
+prepend_keymap = []
+
+[completion]
+prepend_keymap = []
+
+[help]
+prepend_keymap = []
