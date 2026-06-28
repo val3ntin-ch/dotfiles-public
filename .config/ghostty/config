@@ -1,0 +1,13 @@
+theme = Catppuccin Mocha 
+font-size = 16
+background-blur-radius = 20
+mouse-hide-while-typing = true
+# window-decoration = false
+macos-option-as-alt = true
+background-opacity = 0.8
+background-blur-radius = 20
+font-family = "JetBrainsMono Nerd Font"
+# Remember size/position/tabs/splits on exit (macOS only)
+window-save-state = always
+# fullscreen=true
+# macos-non-native-fullscreen=visible-menu
