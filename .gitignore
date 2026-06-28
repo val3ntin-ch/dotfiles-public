@@ -1,0 +1,10 @@
+# zsh — generated/sensitive files
+.config/zsh/.zsh_history
+.config/zsh/.zcompdump*
+
+# fish — runtime logs
+.config/fish/tmux-client-*.log
+
+# tmux — plugin vendor code (managed by TPM) and session state
+.config/tmux/plugins/
+.config/tmux/resurrect/
