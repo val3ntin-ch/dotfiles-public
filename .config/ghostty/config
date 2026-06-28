@@ -1,13 +1,40 @@
-theme = Catppuccin Mocha 
+# ── Appearance ────────────────────────────────────────────────────────────────
+theme = Catppuccin Mocha
+font-family = "JetBrainsMono Nerd Font"
 font-size = 16
-background-blur-radius = 20
-mouse-hide-while-typing = true
-# window-decoration = false
-macos-option-as-alt = true
+font-thicken = true
+font-feature = calt
+font-feature = liga
+
 background-opacity = 0.8
 background-blur-radius = 20
-font-family = "JetBrainsMono Nerd Font"
-# Remember size/position/tabs/splits on exit (macOS only)
+
+window-padding-x = 8
+window-padding-y = 8
 window-save-state = always
-# fullscreen=true
-# macos-non-native-fullscreen=visible-menu
+# window-decoration = false
+# fullscreen = true
+# macos-non-native-fullscreen = visible-menu
+
+# ── Cursor ────────────────────────────────────────────────────────────────────
+cursor-style-blink = false
+
+# ── Shell integration ─────────────────────────────────────────────────────────
+# Enables semantic prompts, scroll-to-prompt, cursor shape from shell vi-mode
+shell-integration = detect
+shell-integration-features = cursor,no-sudo,title
+
+# ── Clipboard ─────────────────────────────────────────────────────────────────
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = true
+
+# ── Scrollback ────────────────────────────────────────────────────────────────
+scrollback-limit = 10000000
+
+# ── Updates ───────────────────────────────────────────────────────────────────
+auto-update = check
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+macos-option-as-alt = true
+mouse-hide-while-typing = true
