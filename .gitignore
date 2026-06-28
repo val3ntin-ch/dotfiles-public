@@ -18,6 +18,8 @@
 .config/zsh/.zsh_sessions/
 # machine-specific overrides — not committed
 .config/zsh/.zshrc.local
+# antidote compiled bundle — regenerated on first shell start if missing
+.config/zsh/.zsh_plugins.zsh
 
 # ── fish — runtime / local overrides ──────────────────────────────────────────
 .config/fish/tmux-client-*.log
