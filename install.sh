@@ -54,19 +54,12 @@ fi
 
 # ── 2. Nix channels (stable 25.11) ────────────────────────────────────────────
 step "Nix channels"
-if nix-channel --list | grep -q "^nixpkgs "; then
-  ok "nixpkgs channel already set"
-else
-  nix-channel --add "$NIXPKGS_CHANNEL_URL" nixpkgs
-  ok "nixpkgs → $NIXPKGS_CHANNEL_URL"
-fi
-
-if nix-channel --list | grep -q "^home-manager "; then
-  ok "home-manager channel already set"
-else
-  nix-channel --add "$HM_CHANNEL_URL" home-manager
-  ok "home-manager → $HM_CHANNEL_URL"
-fi
+# Always set channels to pinned URLs — overwrites any existing version.
+# Ensures home-manager and nixpkgs stay on the same release.
+nix-channel --add "$NIXPKGS_CHANNEL_URL" nixpkgs
+ok "nixpkgs → $NIXPKGS_CHANNEL_URL"
+nix-channel --add "$HM_CHANNEL_URL" home-manager
+ok "home-manager → $HM_CHANNEL_URL"
 
 note "Updating channels (downloads package index — may take a few minutes)..."
 nix-channel --update

@@ -59,13 +59,14 @@
     pyenv     # .zprofile: pyenv init
     rbenv     # .zprofile: rbenv init
 
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-    ghostty
-  ];
-
-  fonts.packages = [
+    # ── Fonts ──────────────────────────────────────────────────────────────
+    # Installed to ~/.nix-profile/share/fonts/ — picked up by fc-cache on Linux,
+    # and by fontconfig on macOS when ghostty searches system fonts.
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.nerd-fonts.symbols-only
+
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+    ghostty
   ];
 
   programs.home-manager.enable = true;
