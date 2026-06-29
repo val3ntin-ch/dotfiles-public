@@ -1,41 +1,77 @@
 # dotfiles
 
-Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Personal dotfiles — Fish, Zsh, Tmux, Neovim, Yazi, Ghostty. Catppuccin Mocha everywhere.  
+Packages via [Nix](https://nixos.org) + [home-manager](https://nix-community.github.io/home-manager/). Symlinks via [GNU Stow](https://www.gnu.org/software/stow/).
 
-## Apply to a new machine
+---
+
+## Install
 
 ```bash
+git clone https://github.com/valentinhc/dotfiles ~/.dotfiles
 cd ~/.dotfiles
-stow --target="$HOME" --restow .
+./install.sh
 ```
 
-Then install plugins:
+The script handles everything:
+
+| Step | What |
+|---|---|
+| 1 | Install Nix (Determinate Systems — macOS + Linux) |
+| 2 | Add `nixpkgs-unstable` + `home-manager` channels |
+| 3 | `home-manager switch` — installs all packages and fonts |
+| 4 | `stow` — symlinks `~/.dotfiles` → `$HOME` |
+| 5 | `fisher install` — fish plugins |
+| 6 | `ya pkg install` — yazi plugins |
+
+After the script finishes, open a new terminal. Tmux plugins auto-install on first start. Antidote (zsh plugins) compiles on first zsh start.
+
+---
+
+## Add or remove a package
+
+Edit `nix/home.nix`, then:
 
 ```bash
-fisher install            # fish plugins (reads fish_plugins)
-# open tmux → <prefix> I  # tmux plugins (TPM)
-ya pkg install            # yazi plugins (reads package.toml)
+home-manager switch -f ~/.dotfiles/nix/home.nix
 ```
 
-Zsh plugins (antidote) compile automatically on first shell start.
+---
+
+## Re-stow after config changes
+
+```bash
+cd ~/.dotfiles && stow --target="$HOME" --restow .
+```
+
+---
 
 ## Structure
 
-All config lives under `.config/` and stows to `~/.config/`. Root-level `.zshenv` stows to `~/.zshenv` (sets `ZDOTDIR`).
-
-| Directory | Tool |
-|-----------|------|
-| `.config/fish/` | Fish shell |
-| `.config/zsh/` | Zsh |
-| `.config/tmux/` | Tmux |
-| `.config/ghostty/` | Ghostty terminal |
-| `.config/starship/` | Starship prompt |
-| `.config/sesh/` | Sesh session manager |
-| `.config/yazi/` | Yazi file manager |
-
-## Re-stow after changes
-
-```bash
-cd ~/.dotfiles
-stow --target="$HOME" --restow .
 ```
+~/.dotfiles/
+├── install.sh          ← bootstrap (run once on new machine)
+├── nix/
+│   └── home.nix        ← all packages (edit here to add/remove tools)
+├── .zshenv             ← sets ZDOTDIR, stows to ~/.zshenv
+└── .config/
+    ├── fish/           ← Fish shell
+    ├── zsh/            ← Zsh
+    ├── tmux/           ← Tmux
+    ├── ghostty/        ← Ghostty terminal
+    ├── starship/       ← Starship prompt
+    ├── sesh/           ← Sesh session manager
+    └── yazi/           ← Yazi file manager
+```
+
+---
+
+## Plugin managers (post-install)
+
+| Tool | Manager | Command |
+|---|---|---|
+| Fish plugins | Fisher | `fisher install` (reads `fish_plugins`) |
+| Zsh plugins | Antidote | auto on first `zsh` start |
+| Tmux plugins | TPM | auto on first `tmux` start, or `<prefix> I` |
+| Yazi plugins | ya pkg | `ya pkg install` (reads `package.toml`) |
+| Node versions | fnm | `fnm install --lts` |

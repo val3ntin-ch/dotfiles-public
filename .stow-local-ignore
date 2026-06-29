@@ -7,3 +7,5 @@ CHANGELOG
 CLAUDE.md
 \.claude
 \.stow-local-ignore
+install\.sh
+nix
