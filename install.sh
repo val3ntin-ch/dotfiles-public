@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
 
-# install nix (skip if already installed)
-if ! command -v nix &>/dev/null; then
-    curl -L https://nixos.org/nix/install | sh -s -- --daemon
+# ── 1. Nix ────────────────────────────────────────────────────────────────────
+# Check /nix dir — not command -v (nix not in PATH before sourcing profile)
+if [ ! -d /nix ]; then
+    curl --proto '=https' --tlsv1.2 -sSf -L \
+        https://install.determinate.systems/nix | sh -s -- install --no-confirm
 fi
 
-# source nix — handles both single-user and multi-user installs
-if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
-    . ~/.nix-profile/etc/profile.d/nix.sh
-elif [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+# source nix — multi-user (Determinate) path first, single-user fallback
+if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
-# install packages
+# ── 2. nixpkgs channel ────────────────────────────────────────────────────────
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+nix-channel --update
+
+# ── 3. Packages ───────────────────────────────────────────────────────────────
 nix-env -iA \
     nixpkgs.fish \
     nixpkgs.zsh \
@@ -48,15 +54,18 @@ nix-env -iA \
     nixpkgs.pyenv \
     nixpkgs.rbenv
 
-# stow dotfiles
+# macOS only
+[ "$(uname -s)" = 'Darwin' ] && nix-env -iA nixpkgs.ghostty
+
+# ── 4. Dotfiles symlinks ──────────────────────────────────────────────────────
 cd "$(dirname "$0")"
 stow --target="$HOME" --restow .
 
-# set zsh as default shell
+# ── 5. Default shell ──────────────────────────────────────────────────────────
 command -v zsh | sudo tee -a /etc/shells
 sudo chsh -s "$(which zsh)" "$USER"
 
-# install fish plugins
+# ── 6. Fish plugins ───────────────────────────────────────────────────────────
 fish -c "
     if not functions -q fisher
         curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/HEAD/functions/fisher.fish | source
@@ -65,8 +74,5 @@ fish -c "
     fisher install < ~/.config/fish/fish_plugins
 "
 
-# install yazi plugins
+# ── 7. Yazi plugins ───────────────────────────────────────────────────────────
 ya pkg install
-
-# macOS only
-[ "$(uname -s)" = 'Darwin' ] && nix-env -iA nixpkgs.ghostty
