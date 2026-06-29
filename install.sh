@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # ── 1. Nix ────────────────────────────────────────────────────────────────────
-# Check /nix dir — nix not in PATH before sourcing profile
 if [ ! -d /nix ]; then
     curl --proto '=https' --tlsv1.2 -sSf -L \
         https://install.determinate.systems/nix | sh -s -- install --no-confirm
@@ -15,46 +14,50 @@ elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
 fi
 
 # ── 2. Packages ───────────────────────────────────────────────────────────────
-# nix profile install uses nixpkgs flake directly — no channels needed
-nix profile install \
-    nixpkgs#fish \
-    nixpkgs#zsh \
-    nixpkgs#starship \
-    nixpkgs#antidote \
-    nixpkgs#neovim \
-    nixpkgs#git \
-    nixpkgs#git-delta \
-    nixpkgs#gh \
-    nixpkgs#lazygit \
-    nixpkgs#git-filter-repo \
-    nixpkgs#stow \
-    nixpkgs#tmux \
-    nixpkgs#sesh \
-    nixpkgs#fzf \
-    nixpkgs#fd \
-    nixpkgs#bat \
-    nixpkgs#eza \
-    nixpkgs#ripgrep \
-    nixpkgs#zoxide \
-    nixpkgs#vivid \
-    nixpkgs#jq \
-    nixpkgs#yazi \
-    nixpkgs#ffmpeg \
-    nixpkgs#imagemagick \
-    nixpkgs#poppler \
-    nixpkgs#resvg \
-    nixpkgs#p7zip \
-    nixpkgs#ouch \
-    nixpkgs#fnm \
-    nixpkgs#pnpm \
-    nixpkgs#go \
-    nixpkgs#pyenv \
+packages=(
+    nixpkgs#fish
+    nixpkgs#zsh
+    nixpkgs#starship
+    nixpkgs#antidote
+    nixpkgs#neovim
+    nixpkgs#git
+    nixpkgs#git-delta
+    nixpkgs#gh
+    nixpkgs#lazygit
+    nixpkgs#git-filter-repo
+    nixpkgs#stow
+    nixpkgs#tmux
+    nixpkgs#sesh
+    nixpkgs#fzf
+    nixpkgs#fd
+    nixpkgs#bat
+    nixpkgs#eza
+    nixpkgs#ripgrep
+    nixpkgs#zoxide
+    nixpkgs#vivid
+    nixpkgs#jq
+    nixpkgs#yazi
+    nixpkgs#ffmpeg
+    nixpkgs#imagemagick
+    nixpkgs#poppler
+    nixpkgs#resvg
+    nixpkgs#p7zip
+    nixpkgs#ouch
+    nixpkgs#fnm
+    nixpkgs#pnpm
+    nixpkgs#go
+    nixpkgs#pyenv
     nixpkgs#rbenv
+)
 
-# macOS only
-[ "$(uname -s)" = 'Darwin' ] && nix profile install nixpkgs#ghostty
+[ "$(uname -s)" = 'Darwin' ] && packages+=(nixpkgs#ghostty)
 
-# reload PATH so installed tools are available
+for pkg in "${packages[@]}"; do
+    echo "installing $pkg..."
+    nix profile add "$pkg" || echo "WARN: $pkg failed — skipping"
+done
+
+# reload PATH
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
 # ── 3. Dotfiles symlinks ──────────────────────────────────────────────────────
