@@ -35,7 +35,6 @@ packages=(
     "$NIX#antidote"
     "$NIX#neovim"
     "$NIX#git"
-    "$NIX#git-delta"
     "$NIX#gh"
     "$NIX#lazygit"
     "$NIX#git-filter-repo"
