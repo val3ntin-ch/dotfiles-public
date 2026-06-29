@@ -13,44 +13,52 @@ elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
+# ── Stable nixpkgs 25.11 ─────────────────────────────────────────────────────
+# Full GitHub ref bypasses Determinate Nix registry — guarantees stable 25.11.
+# macOS: nixpkgs-25.11-darwin   Linux: nixos-25.11
+if [ "$(uname -s)" = 'Darwin' ]; then
+    NIX="github:NixOS/nixpkgs/nixpkgs-25.11-darwin"
+else
+    NIX="github:NixOS/nixpkgs/nixos-25.11"
+fi
+
 # ── 2. Packages ───────────────────────────────────────────────────────────────
 packages=(
-    nixpkgs#fish
-    nixpkgs#zsh
-    nixpkgs#starship
-    nixpkgs#antidote
-    nixpkgs#neovim
-    nixpkgs#git
-    github:NixOS/nixpkgs/nixpkgs-unstable#git-delta
-    nixpkgs#gh
-    nixpkgs#lazygit
-    nixpkgs#git-filter-repo
-    nixpkgs#stow
-    nixpkgs#tmux
-    nixpkgs#sesh
-    nixpkgs#fzf
-    nixpkgs#fd
-    nixpkgs#bat
-    nixpkgs#eza
-    nixpkgs#ripgrep
-    nixpkgs#zoxide
-    nixpkgs#vivid
-    nixpkgs#jq
-    nixpkgs#yazi
-    nixpkgs#ffmpeg
-    nixpkgs#imagemagick
-    nixpkgs#poppler
-    nixpkgs#resvg
-    nixpkgs#p7zip
-    nixpkgs#ouch
-    nixpkgs#fnm
-    nixpkgs#pnpm
-    nixpkgs#go
-    nixpkgs#pyenv
-    nixpkgs#rbenv
+    "$NIX#fish"
+    "$NIX#zsh"
+    "$NIX#starship"
+    "$NIX#antidote"
+    "$NIX#neovim"
+    "$NIX#git"
+    "$NIX#git-delta"
+    "$NIX#gh"
+    "$NIX#lazygit"
+    "$NIX#git-filter-repo"
+    "$NIX#stow"
+    "$NIX#tmux"
+    "$NIX#sesh"
+    "$NIX#fzf"
+    "$NIX#fd"
+    "$NIX#bat"
+    "$NIX#eza"
+    "$NIX#ripgrep"
+    "$NIX#zoxide"
+    "$NIX#vivid"
+    "$NIX#jq"
+    "$NIX#yazi"
+    "$NIX#ffmpeg"
+    "$NIX#imagemagick"
+    "$NIX#poppler"
+    "$NIX#resvg"
+    "$NIX#p7zip"
+    "$NIX#ouch"
+    "$NIX#fnm"
+    "$NIX#pnpm"
+    "$NIX#go"
+    "$NIX#pyenv"
+    "$NIX#rbenv"
+    "$NIX#ghostty"
 )
-
-packages+=(nixpkgs#ghostty)
 
 for pkg in "${packages[@]}"; do
     echo "installing $pkg..."
