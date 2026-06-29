@@ -46,9 +46,9 @@ nix-env -iA \
 cd "$(dirname "$0")"
 stow --target="$HOME" --restow .
 
-# set fish as default shell
-command -v fish | sudo tee -a /etc/shells
-sudo chsh -s "$(which fish)" "$USER"
+# set zsh as default shell
+command -v zsh | sudo tee -a /etc/shells
+sudo chsh -s "$(which zsh)" "$USER"
 
 # install fish plugins
 fish -c "
