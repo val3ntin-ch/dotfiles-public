@@ -50,7 +50,7 @@ packages=(
     nixpkgs#rbenv
 )
 
-[ "$(uname -s)" = 'Darwin' ] && packages+=(nixpkgs#ghostty)
+packages+=(nixpkgs#ghostty)
 
 for pkg in "${packages[@]}"; do
     echo "installing $pkg..."
