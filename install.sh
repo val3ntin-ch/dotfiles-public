@@ -21,7 +21,7 @@ packages=(
     nixpkgs#antidote
     nixpkgs#neovim
     nixpkgs#git
-    nixpkgs#git-delta
+    github:NixOS/nixpkgs/nixpkgs-unstable#git-delta
     nixpkgs#gh
     nixpkgs#lazygit
     nixpkgs#git-filter-repo
