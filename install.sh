@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-# install nix
-curl -L https://nixos.org/nix/install | sh
+# install nix (skip if already installed)
+if ! command -v nix &>/dev/null; then
+    curl -L https://nixos.org/nix/install | sh -s -- --daemon
+fi
 
-# source nix
-. ~/.nix-profile/etc/profile.d/nix.sh
+# source nix — handles both single-user and multi-user installs
+if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then
+    . ~/.nix-profile/etc/profile.d/nix.sh
+elif [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 
 # install packages
 nix-env -iA \
