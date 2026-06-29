@@ -6,23 +6,28 @@ if [ ! -d /nix ]; then
         https://install.determinate.systems/nix | sh -s -- install --no-confirm
 fi
 
-# source nix — multi-user (Determinate) path first, single-user fallback
+# source nix
 if [ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 elif [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
-# ── Stable nixpkgs 25.11 ─────────────────────────────────────────────────────
-# Full GitHub ref bypasses Determinate Nix registry — guarantees stable 25.11.
-# macOS: nixpkgs-25.11-darwin   Linux: nixos-25.11
+# ── 2. Clean existing profile ─────────────────────────────────────────────────
+# Wipe all previously installed packages to avoid version conflicts
+echo "Removing existing nix packages..."
+nix profile list 2>/dev/null | awk '/^Name:/{print $2}' | while read -r name; do
+    nix profile remove "$name" 2>/dev/null || true
+done
+
+# ── 3. Stable nixpkgs 25.11 ──────────────────────────────────────────────────
 if [ "$(uname -s)" = 'Darwin' ]; then
     NIX="github:NixOS/nixpkgs/nixpkgs-25.11-darwin"
 else
     NIX="github:NixOS/nixpkgs/nixos-25.11"
 fi
 
-# ── 2. Packages ───────────────────────────────────────────────────────────────
+# ── 4. Packages ───────────────────────────────────────────────────────────────
 packages=(
     "$NIX#fish"
     "$NIX#zsh"
@@ -65,18 +70,17 @@ for pkg in "${packages[@]}"; do
     nix profile add "$pkg" || echo "WARN: $pkg failed — skipping"
 done
 
-# reload PATH
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
-# ── 3. Dotfiles symlinks ──────────────────────────────────────────────────────
+# ── 5. Dotfiles symlinks ──────────────────────────────────────────────────────
 cd "$(dirname "$0")"
 stow --target="$HOME" --restow .
 
-# ── 4. Default shell ──────────────────────────────────────────────────────────
+# ── 6. Default shell ──────────────────────────────────────────────────────────
 command -v zsh | sudo tee -a /etc/shells
 sudo chsh -s "$(which zsh)" "$USER"
 
-# ── 5. Fish plugins ───────────────────────────────────────────────────────────
+# ── 7. Fish plugins ───────────────────────────────────────────────────────────
 fish -c "
     if not functions -q fisher
         curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/HEAD/functions/fisher.fish | source
@@ -85,5 +89,5 @@ fish -c "
     fisher install < ~/.config/fish/fish_plugins
 "
 
-# ── 6. Yazi plugins ───────────────────────────────────────────────────────────
+# ── 8. Yazi plugins ───────────────────────────────────────────────────────────
 ya pkg install
