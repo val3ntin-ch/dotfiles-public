@@ -38,4 +38,3 @@ auto-update = check
 # ── macOS ─────────────────────────────────────────────────────────────────────
 macos-option-as-alt = true
 mouse-hide-while-typing = true
-macos-titlebar-style = hidden
