@@ -29,6 +29,20 @@ return {
     opts = { colorscheme = "catppuccin" },
   },
 
+  -- show dotfiles by default in neo-tree
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+      },
+    },
+  },
+
   -- auto-close and auto-rename JSX/HTML tags
   {
     "windwp/nvim-ts-autotag",
