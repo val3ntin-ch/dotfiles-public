@@ -56,25 +56,27 @@ return {
     opts = {},
   },
 
-  -- extra treesitter parsers (graphql + docker handled by their extras)
+  -- extra treesitter parsers (docker handled by lang.docker extra)
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "css",
         "scss",
+        "graphql",
         "html",
       })
     end,
   },
 
-  -- css + html + emmet LSPs (graphql handled by lang.graphql extra)
+  -- css + html + graphql + emmet LSPs
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
         cssls = {},
         html = {},
+        graphql = {},
         emmet_ls = {
           filetypes = {
             "html", "css", "scss",
