@@ -1,4 +1,4 @@
-# dotfiles
+# .dotfiles
 
 Personal terminal setup for macOS — one script from zero to fully configured shell.
 
