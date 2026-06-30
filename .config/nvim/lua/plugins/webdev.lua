@@ -40,7 +40,7 @@ return {
   },
   {
     "LazyVim/LazyVim",
-    opts = { colorscheme = "catppuccin" },
+    opts = { colorscheme = "tokyonight" },
   },
 
   -- seamless navigation between tmux panes and nvim splits (Ctrl+h/j/k/l)
