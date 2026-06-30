@@ -1,6 +1,6 @@
 # ~/.config/fish — Fish Shell Configuration
 
-## FEYNMAN — what is this directory and why does it exist?
+## What is this directory and why does it exist?
 
 Fish has a strict load order. Every time you open a terminal (or a new tmux
 pane, or run `exec fish`) Fish loads files in this sequence:
@@ -32,7 +32,7 @@ fish_plugins   ← the plugin list (like .zsh_plugins.txt in antidote)
 Fisher is the package manager. It reads `fish_plugins`, clones repos into
 `~/.local/share/fisher`, and generates function/conf.d files.
 
-FEYNMAN — why Fisher over others (Oh-My-Fish, etc)?
+why Fisher over others (Oh-My-Fish, etc)?
 - Plugin list is a plain text file → easy to read, diff, review in git
 - `fisher install`/`fisher update`/`fisher remove` — simple CLI
 - Minimal: no framework magic, just sources files
@@ -57,7 +57,7 @@ Files load alphabetically. All run before `config.fish`.
 
 ### `conf.d/env.fish` — Environment Variables
 
-FEYNMAN — why a separate env file?
+why a separate env file?
 
 Fish has no `.zshenv` equivalent for scripts. But `conf.d/` files run for
 every shell including non-interactive ones (when called as a script interpreter).
@@ -114,7 +114,7 @@ border:#6c7086  label:#cdd6f4
 
 ### `conf.d/path.fish` — PATH and Runtime Paths
 
-FEYNMAN — fish PATH is a list variable (`$PATH`), not a colon-separated string.
+fish PATH is a list variable (`$PATH`), not a colon-separated string.
 `fish_add_path -g` adds to the global universal PATH, deduplicating automatically.
 
 | Path added | Why |
@@ -143,7 +143,7 @@ FEYNMAN — fish PATH is a list variable (`$PATH`), not a colon-separated string
 
 ### `conf.d/aliases.fish` — Aliases
 
-FEYNMAN — fish `alias foo 'bar'` creates a function named `foo` that calls `bar`.
+fish `alias foo 'bar'` creates a function named `foo` that calls `bar`.
 It is NOT the same as zsh's `alias`. For tool-shadowing aliases (e.g. `rg` → `rg --flags`),
 always prefix with `command` inside the alias body to avoid infinite recursion.
 
@@ -284,7 +284,7 @@ always prefix with `command` inside the alias body to avoid infinite recursion.
 
 ### `conf.d/aliases.fish` — eza (tools-eza.fish)
 
-FEYNMAN — why eza instead of ls?
+why eza instead of ls?
 eza shows icons, git status per file, column headers, human sizes, symlink targets,
 color-coded permissions. Configured via `EZA_COLORS` (Catppuccin) in env.fish.
 
@@ -306,7 +306,7 @@ Initializes `jhillyerd/plugin-git` abbreviations. See § 3 for the full list.
 
 ### `conf.d/git-conventional.fish` — Conventional Commit Abbreviations
 
-FEYNMAN — Conventional Commits format: `type(scope): description`
+Conventional Commits format: `type(scope): description`
 Types: feat, fix, docs, style, refactor, perf, test, chore, ci, build, revert.
 Using this format enables automatic CHANGELOG generation and semantic versioning.
 
@@ -331,7 +331,7 @@ can complete the commit message inline before pressing Enter.
 
 ### `conf.d/fzf.fish` — fzf Bindings (patrickf1/fzf.fish)
 
-FEYNMAN — fzf.fish intercepts key bindings and opens fzf with context-aware lists.
+fzf.fish intercepts key bindings and opens fzf with context-aware lists.
 
 | Binding | Action |
 |---------|--------|
@@ -347,7 +347,7 @@ Preview commands set in `tools-fzf.fish`:
 
 ### `conf.d/prompt-starship.fish` — Starship Prompt
 
-FEYNMAN — Starship is a cross-shell prompt written in Rust.
+Starship is a cross-shell prompt written in Rust.
 Config lives at `~/.config/starship/starship.toml` — shared between fish and zsh.
 Your prompt looks **identical** in both shells.
 
@@ -358,7 +358,7 @@ Catppuccin Mocha palette defined in starship.toml via `[palettes.catppuccin_moch
 
 ### `conf.d/zoxide.fish` — Zoxide (kidonng/zoxide.fish)
 
-FEYNMAN — zoxide tracks every directory you visit, weighted by frecency
+zoxide tracks every directory you visit, weighted by frecency
 (frequency + recency). It learns your habits.
 
 | Command | What it does |
@@ -371,7 +371,7 @@ FEYNMAN — zoxide tracks every directory you visit, weighted by frecency
 
 ### `conf.d/tmux.fish` — Tmux Plugin (budimanjojo/tmux.fish)
 
-FEYNMAN — wraps the `tmux` command to fix `$TERM`, auto-connect to existing
+wraps the `tmux` command to fix `$TERM`, auto-connect to existing
 sessions, and provide directory-named session creation.
 
 | Alias/function | What it does |
@@ -395,7 +395,7 @@ sessions, and provide directory-named session creation.
 
 ## § 4  functions/ — Autoloaded Functions
 
-FEYNMAN — fish autoloads functions from `functions/`. You never `source` them.
+fish autoloads functions from `functions/`. You never `source` them.
 The first time you call `mkcd`, fish reads `functions/mkcd.fish` and defines it.
 After that it's in memory for the session. This is different from zsh where you'd
 source a functions file explicitly.

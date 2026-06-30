@@ -1,6 +1,6 @@
 # $ZDOTDIR/conf.d/completions.zsh
 # ══════════════════════════════════════════════════════════════════════════════
-# FEYNMAN — why a separate completions file?
+# why a separate completions file?
 #
 # compinit already ran in .zshrc (§1). Now we add completions from tools
 # that generate their own completion scripts at runtime (gh, docker, pnpm…).

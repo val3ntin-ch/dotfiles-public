@@ -1,6 +1,6 @@
 # $ZDOTDIR/conf.d/aliases.zsh
 # ══════════════════════════════════════════════════════════════════════════════
-# FEYNMAN — what is an alias?
+# what is an alias?
 #
 # An alias is a name that expands to a longer string before ZSH executes it.
 # `alias gs="git status -sb"` means every time you type `gs`, ZSH replaces it
@@ -19,7 +19,7 @@
 # EZA — modern ls replacement (Rust, maintained fork of exa)
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — why eza instead of ls?
+# why eza instead of ls?
 #
 # GNU `ls` was written in the 1970s. It shows filenames and that's it.
 # eza shows: icons, git status per file, column headers, human sizes,
@@ -58,7 +58,7 @@ fi
 # BAT — cat with syntax highlighting, line numbers, git integration
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — why bat instead of cat?
+# why bat instead of cat?
 #
 # `cat` just dumps bytes to stdout. bat adds:
 #   • Syntax highlighting for 200+ languages
@@ -110,7 +110,7 @@ alias svim='sudo -E nvim'
 # GIT — the full 2026 workflow
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — alias strategy for git:
+# alias strategy for git:
 #
 # Short 2-letter aliases for the commands you run dozens of times a day.
 # Longer aliases for commands that are important but less frequent.
@@ -251,7 +251,7 @@ alias gtagd='git tag -d'                          # delete tag locally
 
 # ── Worktrees (2026 power feature) ────────────────────────────────────────
 #
-# FEYNMAN — what is a git worktree?
+# what is a git worktree?
 #
 # Normally, one git repo = one working directory. If you need to work on
 # branch B while branch A builds, you have to stash, switch, work, switch back.
@@ -280,7 +280,7 @@ alias gurl='git remote get-url origin'             # print origin URL
 # TMUX
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — tmux terminology:
+# tmux terminology:
 #   server  → background process, holds all sessions
 #   session → a collection of windows (like a project workspace)
 #   window  → a tab within a session
@@ -339,7 +339,7 @@ alias expodc='npx expo start --clear'
 # RIPGREP + FD
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — why rg over grep, fd over find?
+# why rg over grep, fd over find?
 #
 # rg (ripgrep):
 #   • Written in Rust, 10-100x faster than grep on large codebases
@@ -401,7 +401,7 @@ alias zconf='nvim $ZDOTDIR'                       # open whole zsh dir in nvim
 # CLIPBOARD
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — why abstract the clipboard?
+# why abstract the clipboard?
 #
 # macOS uses pbcopy/pbpaste. Linux with X11 uses xclip or xsel.
 # Linux with Wayland uses wl-copy/wl-paste. By aliasing them all to `copy`/`paste`,
@@ -430,7 +430,7 @@ fi
 # GLOBAL ALIASES
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — global aliases expand anywhere on the command line, not just at
+# global aliases expand anywhere on the command line, not just at
 # position 0. So `cmd NUL` expands NUL wherever it appears.
 #
 # Use sparingly — they can make scripts confusing if overused.

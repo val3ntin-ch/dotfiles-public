@@ -3,7 +3,7 @@
 # Git environment config — things that configure git's BEHAVIOUR in the shell,
 # not aliases (those are in aliases.zsh).
 #
-# FEYNMAN — why a separate git.zsh?
+# why a separate git.zsh?
 #
 # Aliases go in aliases.zsh. But git also has shell-level integrations:
 #   • Prompt info (branch, dirty state) — handled by Starship
@@ -14,7 +14,7 @@
 
 # ── delta (better git diff viewer) ────────────────────────────────────────
 #
-# FEYNMAN — what is delta?
+# what is delta?
 #
 # `git diff` by default shows diffs in a plain, hard-to-read format.
 # `delta` is a diff viewer that adds:
@@ -37,7 +37,7 @@ fi
 
 # ── Pretty log formats ─────────────────────────────────────────────────────
 #
-# FEYNMAN — git log --format uses placeholders:
+# git log --format uses placeholders:
 #   %h  = short hash       %H  = full hash
 #   %s  = subject (title)  %b  = body
 #   %an = author name      %ae = author email
@@ -58,7 +58,7 @@ export GIT_LOG_FORMAT GIT_LOG_FORMAT_FULL
 
 # ── Conventional commit helper ─────────────────────────────────────────────
 #
-# FEYNMAN — Conventional Commits is a specification for commit messages:
+# Conventional Commits is a specification for commit messages:
 #   type(scope): description
 #   feat(auth): add OAuth2 login
 #   fix(api): handle null response from endpoint

@@ -1,6 +1,6 @@
 # $ZDOTDIR/conf.d/functions.zsh
 # ══════════════════════════════════════════════════════════════════════════════
-# FEYNMAN — functions vs aliases:
+# functions vs aliases:
 #
 # Alias:    text substitution, no arguments beyond the substituted string.
 # Function: real code — can take named arguments ($1 $2), use if/loops,
@@ -101,7 +101,7 @@ extract() {
 # FZF UTILITIES
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — fzf is a fuzzy finder: you pipe a list of things to it, and it
+# fzf is a fuzzy finder: you pipe a list of things to it, and it
 # gives you an interactive prompt to fuzzy-search + select from them. The
 # selected item is printed to stdout. We combine this with other tools to build
 # interactive workflows.
@@ -286,7 +286,7 @@ fts() {
 
 # tdev — spin up a structured dev session for a project
 #
-# FEYNMAN — what does this do?
+# what does this do?
 # Creates a tmux session named after the project with a sensible layout:
 #   Window 1: editor (nvim)
 #   Window 2: split pane — terminal left, terminal right (for running things)
