@@ -2,8 +2,6 @@
 # $ZDOTDIR/.zshrc  ·  interactive shell config
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — what is this file and why does it exist?
-#
 # ZSH has a strict load order. Every time you open a terminal (or a new tmux
 # pane, or run `exec zsh`) ZSH loads files in this sequence:
 #
@@ -40,8 +38,6 @@ mkdir -p \
 # § 1  COMPLETION SYSTEM
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — what is the completion system?
-#
 # When you type `git che<Tab>`, ZSH runs a completion function called `_git`.
 # That function lives somewhere in a list of directories called $fpath.
 # `compinit` scans $fpath, reads all those functions, and registers them.
@@ -77,8 +73,6 @@ else
 fi
 
 # ── Completion styling (zstyle) ────────────────────────────────────────────
-#
-# FEYNMAN — what is zstyle?
 #
 # zstyle is ZSH's universal config mechanism. The pattern ':completion:*'
 # matches all completion contexts. Each line says:
@@ -137,8 +131,6 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # § 2  ANTIDOTE — plugin manager
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — what is antidote and why not zinit/oh-my-zsh?
-#
 # A plugin manager's job: download ZSH plugins from GitHub and make sure they
 # get sourced every time your shell starts.
 #
@@ -196,7 +188,7 @@ unset _antidote_home _antidote_bin _plugins_txt _plugins_zsh
 # § 3  HISTORY
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN — ZSH history has two sizes and they mean different things:
+# ZSH history has two sizes:
 #
 #   HISTSIZE   = how many lines ZSH keeps in RAM during the session
 #   SAVEHIST   = how many lines get written to $HISTFILE when you exit
@@ -255,8 +247,6 @@ setopt RC_QUOTES        # 'it''s' → "it's" inside single-quoted strings
 # ══════════════════════════════════════════════════════════════════════════════
 # § 5  VI MODE
 # ══════════════════════════════════════════════════════════════════════════════
-#
-# FEYNMAN — what is vi mode in the shell?
 #
 # Your shell prompt is a tiny text editor. By default it uses "emacs mode":
 # Ctrl-A = start of line, Ctrl-E = end of line, etc.
@@ -344,7 +334,7 @@ zvm_after_init() {
 
 # ── zsh-autosuggestions ────────────────────────────────────────────────────
 #
-# FEYNMAN: autosuggestions watches what you type and shows a "ghost" completion
+# Autosuggestions watches what you type and shows a "ghost" completion
 # in grey. It has two strategies:
 #   history    → finds the most recent history entry that starts with what you typed
 #   completion → runs the completion engine to find possible expansions
@@ -358,7 +348,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#585b70"  # Catppuccin: Surface 2 (subtle gr
 
 # ── fast-syntax-highlighting ───────────────────────────────────────────────
 #
-# FEYNMAN: as you type, commands get colored:
+# As you type, commands get colored:
 #   Green  = valid command found in PATH
 #   Red    = command not found
 #   Blue   = built-in (cd, echo, alias)
@@ -392,7 +382,7 @@ FAST_HIGHLIGHT_STYLES[variable]='fg=#89b4fa'          # Blue — $VAR
 
 # ── history-substring-search ───────────────────────────────────────────────
 #
-# FEYNMAN: when you press ↑, instead of going to the previous command, ZSH
+# When you press ↑, instead of going to the previous command, ZSH
 # searches history for the most recent command that CONTAINS what you've
 # already typed. So if you type `docker` then press ↑, you only cycle through
 # commands that included `docker` — not your entire history.
@@ -406,7 +396,7 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true  # skip duplicates while cycling
 
 # ── you-should-use ─────────────────────────────────────────────────────────
 #
-# FEYNMAN: this plugin watches the commands you type. If you type a full
+# Watches the commands you type. If you type a full
 # command that has an alias defined, it gently reminds you after execution.
 # Helps you actually learn and use the aliases you define.
 #
@@ -417,7 +407,7 @@ YSU_IGNORED_ALIASES=("g" "v" "ls")     # don't remind about super-short aliases
 
 # ── fzf-tab ────────────────────────────────────────────────────────────────
 #
-# FEYNMAN: fzf-tab intercepts the Tab key and instead of showing ZSH's boring
+# fzf-tab intercepts the Tab key and instead of showing ZSH's boring
 # completion menu, it opens fzf. You can fuzzy-search the completions AND get
 # a live preview panel on the right showing file contents, git diffs, etc.
 #
@@ -487,7 +477,7 @@ AUTOPAIR_INHIBIT_INIT=0
 
 # ── zsh-system-clipboard ───────────────────────────────────────────────────
 #
-# FEYNMAN: in vi normal mode, `y` (yank) and `d` (delete) write to the system
+# In vi normal mode, `y` (yank) and `d` (delete) write to the system
 # clipboard, not just ZSH's internal kill ring. So you can yank a command in
 # the shell and paste it in another app, and vice versa.
 #
@@ -497,8 +487,6 @@ AUTOPAIR_INHIBIT_INIT=0
 # ══════════════════════════════════════════════════════════════════════════════
 # § 7  COLORS
 # ══════════════════════════════════════════════════════════════════════════════
-#
-# FEYNMAN — how do terminal colors actually work?
 #
 # Programs check the LS_COLORS environment variable to know what color to
 # assign to each file type. The format is key=value pairs:
@@ -615,7 +603,7 @@ export GREP_COLORS="ms=38;5;203:mc=38;5;203:sl=:cx=:fn=38;5;110:ln=38;5;114:bn=3
 
 # ── Starship prompt ─────────────────────────────────────────────────────────
 #
-# FEYNMAN: Starship is a cross-shell prompt written in Rust. It reads
+# Starship is a cross-shell prompt written in Rust. It reads
 # ~/.config/starship.toml. Because the config file is shared, your prompt
 # looks IDENTICAL in ZSH, Fish, and any other shell you use.
 # `starship init zsh` outputs a few lines of ZSH code that hook into
@@ -625,7 +613,7 @@ command -v starship &>/dev/null && eval "$(starship init zsh)"
 
 # ── zoxide ──────────────────────────────────────────────────────────────────
 #
-# FEYNMAN: zoxide is a replacement for `cd` that learns from your habits.
+# zoxide is a replacement for `cd` that learns from your habits.
 # It tracks every directory you visit, weighted by how often and how recently
 # you visited it (called "frecency" = frequency + recency).
 #
@@ -644,7 +632,7 @@ command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --install-if-missing -
 # § 9  MODULAR CONFIGS
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# FEYNMAN: instead of one massive .zshrc, we split concerns:
+# Instead of one massive .zshrc, we split concerns:
 #   conf.d/aliases.zsh     → all alias definitions
 #   conf.d/functions.zsh   → shell functions (too complex for aliases)
 #   conf.d/completions.zsh → tool-generated completions, cached
