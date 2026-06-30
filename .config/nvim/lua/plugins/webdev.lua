@@ -65,7 +65,7 @@ return {
 
   -- ensure Mason tools are installed on new machines
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "markdownlint-cli2",
