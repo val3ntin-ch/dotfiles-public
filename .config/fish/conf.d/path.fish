@@ -33,6 +33,3 @@ if test -d $HOME/Library/Android/sdk
     fish_add_path -g $ANDROID_HOME/emulator
     fish_add_path -g $ANDROID_HOME/platform-tools
 end
-
-# NVM_DIR (set for compat with scripts that read it)
-set -gx NVM_DIR $HOME/.nvm

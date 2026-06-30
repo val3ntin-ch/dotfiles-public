@@ -10,5 +10,3 @@ fzf --fish | source
 set -l LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 test -f $LOCAL_CONFIG; and source $LOCAL_CONFIG
 
-# Generated for envman. Do not edit.
-test -s ~/.config/envman/load.fish; and source ~/.config/envman/load.fish

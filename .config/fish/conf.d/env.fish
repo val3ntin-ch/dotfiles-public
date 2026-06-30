@@ -9,6 +9,7 @@ set -gx XDG_STATE_HOME $HOME/.local/state
 mkdir -p $XDG_CACHE_HOME/fish $XDG_STATE_HOME/fish
 
 # ── Editors ───────────────────────────────────────────────────────────────
+set -gx EDITOR nvim
 set -gx VISUAL nvim
 set -gx PAGER less
 set -gx LESS "-R -F -X --use-color -j4"

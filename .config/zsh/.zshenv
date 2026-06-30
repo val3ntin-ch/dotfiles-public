@@ -20,7 +20,8 @@ export ANTIDOTE_HOME="$XDG_DATA_HOME/antidote"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="less"
-export LESS="-R -F -X"
+export LESS="-R -F -X --use-color -j4"
+export LESSHISTFILE="$XDG_STATE_HOME/less/history"
 
 # ── Locale ────────────────────────────────────────────────────────────────
 export LANG="en_US.UTF-8"
@@ -45,7 +46,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # ── Local binaries ────────────────────────────────────────────────────────
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # ── pnpm ──────────────────────────────────────────────────────────────────
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"

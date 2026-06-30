@@ -586,14 +586,6 @@ export EZA_ICONS_AUTO=1
 # ── GCC / compiler colors ──────────────────────────────────────────────────
 export GCC_COLORS='error=01;38;5;203:warning=38;5;220:note=38;5;110:caret=38;5;114:locus=01:quote=01'
 
-# ── less ───────────────────────────────────────────────────────────────────
-# -R = pass ANSI color codes through raw
-# -F = auto-exit if content fits on one screen
-# -X = don't clear screen on exit
-# --use-color = enable color in less itself (prompts, etc.)
-export LESS="-R -F -X --use-color -j4"
-export LESSHISTFILE="$XDG_STATE_HOME/less/history"
-
 # ── grep colors ────────────────────────────────────────────────────────────
 export GREP_COLORS="ms=38;5;203:mc=38;5;203:sl=:cx=:fn=38;5;110:ln=38;5;114:bn=38;5;116:se=38;5;108"
 
