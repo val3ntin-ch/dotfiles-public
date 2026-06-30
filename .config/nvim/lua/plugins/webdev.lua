@@ -40,6 +40,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        "css",
+        "scss",
         "graphql",
         "html",
       })
@@ -53,17 +55,19 @@ return {
       ensure_installed = {
         "prettier",
         "eslint_d",
+        "css-lsp",
         "html-lsp",
         "graphql-language-service-cli",
       },
     },
   },
 
-  -- html + graphql LSPs
+  -- css + html + graphql LSPs
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        cssls = {},
         html = {},
         graphql = {},
       },
