@@ -17,7 +17,8 @@ brew update
 step "Core tools"
 brew install \
   fish zsh starship antidote neovim git gh lazygit git-delta \
-  stow tmux vivid ouch bat eza fnm pnpm go pyenv rbenv
+  stow tmux vivid ouch bat eza fnm pnpm go pyenv rbenv \
+  tree-sitter
 
 # ── 3. Yazi + required dependencies ──────────────────────────────────────────
 step "Yazi + dependencies"
@@ -35,6 +36,8 @@ brew install --cask ghostty font-jetbrains-mono-nerd-font font-symbols-only-nerd
 
 # ── 6. Stow dotfiles ──────────────────────────────────────────────────────────
 step "Stowing dotfiles"
+# back up any real dirs that would conflict with stow symlinks
+[[ -d "$HOME/.config/nvim" && ! -L "$HOME/.config/nvim" ]] && mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
 (cd "$DOTFILES" && stow --target="$HOME" --restow .)
 
 # ── 7. Default shell → zsh ────────────────────────────────────────────────────
@@ -62,4 +65,7 @@ eval "$(fnm env --log-level quiet)"
 fnm install --lts
 
 printf '\n\033[1;32m✓ Done. Open a new terminal — zsh is your default shell.\033[0m\n'
-printf '  Optional: run  ya pkg install  to install yazi plugins.\n\n'
+printf '  Next steps:\n'
+printf '    nvim                  → first launch installs all plugins (~2-5 min)\n'
+printf '    :LazyHealth           → verify everything is working\n'
+printf '    ya pkg install        → install yazi plugins (optional)\n\n'

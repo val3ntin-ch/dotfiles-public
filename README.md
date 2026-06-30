@@ -55,6 +55,7 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 └── .config/
     ├── fish/               Fish shell — conf.d, functions, abbreviations
     ├── zsh/                Zsh — antidote plugins, aliases, completions
+    ├── nvim/               Neovim — LazyVim + React/TS/Tailwind/ESLint/Prettier
     ├── tmux/               Tmux — keybindings, plugins, status bar
     ├── ghostty/            Ghostty terminal config
     ├── starship/           Starship prompt (shared by fish + zsh)
