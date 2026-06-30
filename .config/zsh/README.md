@@ -834,32 +834,6 @@ Quick reference — where each important variable is set and why.
 
 ---
 
-## Install & first run
-
-```bash
-# 1. Clone
-git clone git@github.com:you/dotfiles.git ~/.dotfiles
-
-# 2. Bootstrap
-cd ~/.dotfiles
-bash install.sh
-
-# 3. Start a new shell
-exec zsh
-```
-
-`install.sh` does:
-1. Install Homebrew (macOS) or skip (Linux uses apt)
-2. Install all tools: zsh, stow, starship, fzf, eza, bat, fd, ripgrep, zoxide, delta, vivid, git, tmux, nvim, fnm
-3. Create XDG directories
-4. `ln -sf ~/.dotfiles/.zshenv ~/.zshenv`
-5. `stow` every package under `.config/`
-6. `chsh -s $(which zsh)`
-
-On first shell open, antidote auto-clones and bundles all plugins.
-
----
-
 ## Adding a new plugin
 
 1. Add a line to `.zsh_plugins.txt`:

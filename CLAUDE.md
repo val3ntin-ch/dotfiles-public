@@ -1,144 +1,96 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
-## What this repo is
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
 
-Personal dotfiles managed with GNU Stow. Each subdirectory of `.config/` is a stow package that gets symlinked into `$HOME/.config/` on the target machine.
+## 1. Think Before Coding
 
-## Stow — how to apply changes
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
 
-Run from inside `~/.dotfiles`:
+Before implementing:
 
-```bash
-cd ~/.dotfiles
-stow --target="$HOME" --restow .
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
 ```
 
-This stows the entire dotfiles tree to `$HOME`. Stow uses directory folding by default — tool config dirs (fish, tmux, yazi, etc.) become symlinks rather than individual file links. This is intentional: it's simpler and works correctly.
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
-`.stow-local-ignore` at the root excludes `CLAUDE.md`, `README.md`, `.git`, etc.
+---
 
-After fresh clone on a new machine:
-1. `cd ~/.dotfiles && stow --target="$HOME" --restow .`
-2. `fisher install` (reads fish_plugins, reinstalls all fish plugins)
-3. Install tmux plugins: open tmux, press `<prefix> I`
-4. `ya pkg install` (installs yazi plugins from package.toml)
-5. Antidote auto-compiles zsh plugins on first shell start
+## 5. Current Setup State
 
-## Reloading configs without restarting
+**Platform:** macOS only. Linux support is planned but not yet implemented.
 
-```bash
-# Fish
-exec fish          # alias: reload
+**Package manager:** Homebrew. All tools installed via `brew install` / `brew install --cask`.
 
-# Zsh
-exec zsh           # alias: reload
+**Bootstrap:** `install.sh` at the repo root handles everything:
 
-# Tmux (prefix is Ctrl+t, not Ctrl+b)
-<prefix> r         # source-file reload
-# or:
-tmux source-file ~/.config/tmux/tmux.conf
+```
+clone repo → run install.sh → open new terminal → done
 ```
 
-## Validating syntax before sourcing
+Steps inside `install.sh`:
+1. Install Homebrew (if missing) + `brew update`
+2. Core tools: fish, zsh, starship, antidote, neovim, git, gh, lazygit, git-delta, stow, tmux, vivid, ouch, bat, eza, fnm, pnpm, go, pyenv, rbenv
+3. Yazi + deps: yazi, ffmpeg-full, sevenzip, jq, poppler, fd, ripgrep, fzf, zoxide, resvg, imagemagick-full → `brew link ffmpeg-full imagemagick-full -f --overwrite`
+4. Sesh: `brew install joshmedeski/sesh/sesh`
+5. Casks: ghostty, font-jetbrains-mono-nerd-font, font-symbols-only-nerd-font
+6. Stow dotfiles to `$HOME`
+7. `chsh` to brew zsh
+8. Fish plugins via Fisher (bootstrapped via curl, reads `fish_plugins`)
+9. Tmux plugins via TPM (headless tmux session triggers auto-bootstrap)
+10. Node LTS via fnm
 
-```bash
-fish --no-execute ~/.config/fish/conf.d/aliases.fish   # fish syntax check
-zsh -n ~/.config/zsh/.zshrc                             # zsh syntax check
-```
+**Not handled by install.sh:** yazi plugins (`ya pkg install`) — optional, run manually.
 
-## Plugin managers
-
-**Fish — Fisher**
-```bash
-fisher install author/plugin    # add (also updates fish_plugins)
-fisher update                   # update all
-fisher remove author/plugin     # remove
-```
-Plugin list: `.config/fish/fish_plugins`. Fisher auto-sources everything into `conf.d/` and `functions/`.
-
-**Zsh — Antidote**
-Plugin list: `.config/zsh/.zsh_plugins.txt`
-Antidote auto-recompiles `.zsh_plugins.zsh` on the next shell start when `.zsh_plugins.txt` is newer. To force rebuild:
-```bash
-antidote bundle < ~/.config/zsh/.zsh_plugins.txt > ~/.config/zsh/.zsh_plugins.zsh
-```
-
-**Tmux — TPM**
-```
-<prefix> I    # install plugins
-<prefix> U    # update plugins
-<prefix> alt+u  # remove unused
-```
-TPM auto-bootstraps on first run (clones itself if missing). Plugins live in `.config/tmux/plugins/` — these are **committed** to the repo (not gitignored).
-
-## Architecture
-
-### Two shells, intentionally aligned
-
-Fish and zsh configs mirror each other. Both use the same tools (eza, bat, fzf, zoxide, delta, starship, rg, fd) with the same flags and Catppuccin Mocha theming. When adding an alias or function, add it to both shells.
-
-### Config structure pattern
-
-**Fish** splits by concern into `conf.d/` files (loaded alphabetically before `config.fish`):
-- `env.fish` — all `set -gx` environment variables
-- `path.fish` — PATH additions via `fish_add_path`
-- `aliases.fish` — tool aliases and shell shortcuts
-- `tools-eza.fish` — eza/ls aliases
-- `git-conventional.fish` — conventional commit abbrs
-- `git.fish` — initializes jhillyerd/plugin-git abbreviations
-- `prompt-starship.fish`, `zoxide.fish`, `tmux.fish`, `fzf.fish` — one-tool-per-file integrations
-
-Functions are one file per function in `functions/` — fish autoloads them lazily.
-
-**Zsh** splits by concern into `conf.d/` files (sourced at end of `.zshrc`):
-- `.zshenv` — env vars and PATH (runs for ALL shells including scripts)
-- `.zprofile` — login-only: `brew shellenv`, nvm, pyenv, rbenv
-- `.zshrc` — interactive: completions → antidote → history → setopts → vi-mode → plugins config → tools init → sources conf.d/
-- `conf.d/aliases.zsh` — all aliases
-- `conf.d/functions.zsh` — all functions
-- `conf.d/git.zsh` — delta, git log formats, gsync/gstat functions
-- `conf.d/completions.zsh` — cached tool completions (gh, docker, kubectl, pnpm, etc.)
-
-**Shared across shells:**
-- `starship/starship.toml` — single prompt config for both
-- `tmux/` — single tmux config used by both via `$fish_tmux_config` / `tsrc` alias
-
-### Catppuccin Mocha — layered theming
-
-Applied at every layer: Ghostty terminal → fish `fish_color_*` vars / zsh F-Sy-H `FAST_HIGHLIGHT_STYLES` → Starship palette → bat `BAT_THEME` → fzf `FZF_DEFAULT_OPTS` colors → eza `EZA_COLORS` → ls `LS_COLORS` via vivid → delta `DELTA_FEATURES` → tmux catppuccin plugin.
-
-`vivid` generates `LS_COLORS` at shell start (`vivid generate catppuccin-mocha`). If vivid is absent, the variable is simply unset — ls still works, just without custom colors.
-
-### Tmux key differences from defaults
-
-- Prefix: `Ctrl+t` (not `Ctrl+b`)
-- Splits: `<prefix> v` (horizontal), `<prefix> g` (vertical)
-- Pane nav: `Ctrl+h/j/k/l` (no prefix, via vim-tmux-navigator)
-- Pane resize: `Ctrl+Shift+h/j/k/l` (no prefix)
-- Session picker: `<prefix> o` (sesh — Go binary, zoxide-integrated, fzf popup)
-- Sessions persist via tmux-resurrect (saved to `.config/tmux/resurrect/`)
-
-### Zsh-specific features not in fish
-
-- `fzf-tab`: every Tab keypress opens fzf with per-command previews (cd shows eza tree, git shows diffs, kill shows process info, etc.)
-- `zsh-vi-mode`: full vi editing with text objects, cursor shape changes, `jk` escape, system clipboard yank/paste
-- `magic-enter`: empty Enter in a git repo → `git status -sb && git log --oneline -5`; in plain dir → `eza -la`
-- `you-should-use`: reminds you after running a command that has an alias defined
-- `zsh-autopair`: auto-closes `()[]{}""''`
-- Cached completions in `conf.d/completions.zsh`: generates and caches `gh`/`docker`/`kubectl`/`helm`/`pnpm`/`rustup`/`starship`/`fnm` completions, regenerating only when the binary changes
-
-### Fish-specific features not in zsh
-
-- `jhillyerd/plugin-git`: ~150 git **abbreviations** (expand on Space, editable before Enter) — zsh uses static aliases
-- `gbage`: list branches by age
-- `gbda`: delete merged branches including squash-merged (zsh only has `gbrclean` for regular merges)
-- `tds`: create tmux session named after current directory (path-hashed for uniqueness)
-- Git flow, bisect, svn, GitLab MR abbreviations
-
-## Tools expected on the machine
-
-`nvim`, `eza`, `bat`, `fd`, `rg`, `fzf`, `zoxide`, `delta` (`git-delta`), `vivid`, `starship`, `tmux`, `sesh`, `fnm`, `gh`, `stow`, `pnpm`
-
-`sesh` installs from a custom tap: `brew install joshmedeski/sesh/sesh`
+**Stow ignore:** `.stow-local-ignore` (filename required by GNU Stow, cannot be renamed) excludes: `*.md`, `CLAUDE.md`, `.git`, `.gitignore`, `.claude`, `.stow-local-ignore`, `install.sh`.

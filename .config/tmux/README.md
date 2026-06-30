@@ -151,18 +151,8 @@ Resurrect files are gitignored — machine-local only.
 
 ## New machine bootstrap
 
-```bash
-# 1. Stow config
-cd ~/.dotfiles && stow --target="$HOME" --restow .
+Run `~/.dotfiles/install.sh` — it stows the config and bootstraps TPM automatically.
 
-# 2. Start tmux — TPM auto-bootstraps and installs plugins on first run
-tmux
+If plugins didn't install: open tmux → `<prefix> I`
 
-# 3. If plugins didn't auto-install
-<prefix> I
-
-# 4. Restore last session (optional)
-<prefix> Ctrl+r
-```
-
-sesh requires a separate install: `brew install joshmedeski/sesh/sesh`
+Restore last session: `<prefix> Ctrl+r`

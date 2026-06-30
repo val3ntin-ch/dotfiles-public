@@ -1,9 +1,19 @@
+# ── Meta / repo files ─────────────────────────────────────────────────────────
 README.md
 .*\.md
+CLAUDE.md
 LICENSE
 CHANGELOG
+
+# ── Git internals ─────────────────────────────────────────────────────────────
 \.git
 \.gitignore
-CLAUDE.md
-\.claude
+
+# ── Stow internals ────────────────────────────────────────────────────────────
 \.stow-local-ignore
+
+# ── Claude Code ───────────────────────────────────────────────────────────────
+\.claude
+
+# ── Bootstrap script (runs from repo, not stowed to $HOME) ───────────────────
+install\.sh

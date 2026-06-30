@@ -9,12 +9,10 @@ into a single fzf picker. Zero tmux plugin dependency.
 ## Table of Contents
 
 1. [How it works](#how-it-works)
-2. [Install](#install)
-3. [Keybinding](#keybinding)
-4. [Picker UI](#picker-ui)
-5. [sesh.toml — pinned sessions](#seshtoml--pinned-sessions)
-6. [CLI reference](#cli-reference)
-7. [New machine bootstrap](#new-machine-bootstrap)
+2. [Keybinding](#keybinding)
+3. [Picker UI](#picker-ui)
+4. [sesh.toml — pinned sessions](#seshtoml--pinned-sessions)
+5. [CLI reference](#cli-reference)
 
 ---
 
@@ -34,16 +32,6 @@ prefix + o  →  fzf-tmux popup
 
 Sesh is **not a tmux plugin** — it's a binary called by a tmux keybinding.
 Changes to `sesh.toml` take effect immediately, no tmux reload needed.
-
----
-
-## Install
-
-```bash
-brew install joshmedeski/sesh/sesh
-```
-
-Config is stowed from `~/.dotfiles/.config/sesh/` → `~/.config/sesh/`.
 
 ---
 
@@ -143,21 +131,6 @@ sesh kill dotfiles
 ```
 
 ---
-
-## New machine bootstrap
-
-```bash
-# 1. Install binary
-brew install joshmedeski/sesh/sesh
-
-# 2. Stow config (if not already done)
-cd ~/.dotfiles && stow --target=$HOME --restow --no-folding .
-
-# 3. Reload tmux config
-tmux source-file ~/.config/tmux/tmux.conf
-
-# 4. Done — prefix+o works immediately
-```
 
 Sesh reads zoxide's database automatically — the more you `cd`, the richer
 the picker gets over time.

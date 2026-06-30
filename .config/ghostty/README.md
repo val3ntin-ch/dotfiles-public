@@ -191,23 +191,3 @@ Ghostty default keybindings (macOS) — none overridden in config:
 
 Splits are Ghostty-native — separate from tmux splits (`prefix+v/g`).
 
----
-
-## Testing & debugging
-
-```bash
-# Validate config (prints errors, exits)
-ghostty +validate-config
-
-# List all built-in themes
-ghostty +list-themes
-
-# Show all config keys and current values
-ghostty +show-config
-
-# Show defaults only
-ghostty +show-config --default
-
-# Check which shell integration is active
-echo $GHOSTTY_SHELL_INTEGRATION_NO_SUDO
-```
