@@ -56,33 +56,55 @@ return {
     opts = {},
   },
 
-  -- extra treesitter parsers
+  -- extra treesitter parsers (graphql + docker handled by their extras)
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "css",
         "scss",
-        "graphql",
         "html",
       })
     end,
   },
 
-  -- css + html + graphql + emmet LSPs
+  -- css + html + emmet LSPs (graphql handled by lang.graphql extra)
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
         cssls = {},
         html = {},
-        graphql = {},
         emmet_ls = {
           filetypes = {
             "html", "css", "scss",
             "javascript", "javascriptreact",
             "typescript", "typescriptreact",
           },
+        },
+      },
+    },
+  },
+
+  -- Jest adapter for neotest (test.core extra provides the framework)
+  {
+    "nvim-neotest/neotest",
+    dependencies = { "nvim-neotest/neotest-jest" },
+    opts = {
+      adapters = {
+        ["neotest-jest"] = {
+          jestCommand = "npx jest",
+          jestConfigFile = function()
+            local file = vim.fn.expand("%:p")
+            if string.find(file, "/packages/") then
+              return string.match(file, "(.-/[^/]+/)src") .. "jest.config.ts"
+            end
+            return vim.fn.getcwd() .. "/jest.config.ts"
+          end,
+          env = { CI = true },
+          cwd = function()
+            return vim.fn.getcwd()
+          end,
         },
       },
     },
