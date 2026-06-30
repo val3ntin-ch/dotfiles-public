@@ -29,6 +29,21 @@ return {
     opts = { colorscheme = "catppuccin" },
   },
 
+  -- seamless navigation between tmux panes and nvim splits (Ctrl+h/j/k/l)
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft", "TmuxNavigateDown",
+      "TmuxNavigateUp", "TmuxNavigateRight",
+    },
+    keys = {
+      { "<c-h>", "<cmd>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd>TmuxNavigateRight<cr>" },
+    },
+  },
+
   -- auto-close and auto-rename JSX/HTML tags
   {
     "windwp/nvim-ts-autotag",
