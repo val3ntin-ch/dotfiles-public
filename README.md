@@ -35,14 +35,31 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 
 | Step | Action |
 |---|---|
+| 0 | Install Xcode CLI tools (C compiler for nvim-treesitter) |
 | 1 | Install Homebrew (skip if already installed) |
 | 2 | Install all CLI tools via `brew install` |
-| 3 | Install Ghostty + Nerd Fonts via `brew install --cask` |
-| 4 | Stow dotfiles to `$HOME` via GNU Stow |
-| 5 | Set zsh as default shell via `chsh` |
-| 6 | Install fish plugins via Fisher |
-| 7 | Bootstrap tmux plugins via TPM |
-| 8 | Install Node LTS via fnm |
+| 3 | Install Yazi + preview dependencies via `brew install` |
+| 4 | Install Sesh via custom tap |
+| 5 | Install Ghostty + Nerd Fonts via `brew install --cask` |
+| 6 | Stow dotfiles to `$HOME` via GNU Stow + create runtime dirs |
+| 7 | Set zsh as default shell via `chsh` |
+| 8 | Install fish plugins via Fisher |
+| 9 | Bootstrap tmux plugins via TPM |
+| 10 | Install Node LTS via fnm + global npm packages (neovim, tree-sitter-cli) |
+
+**After install — one-time per machine:**
+
+```bash
+# set git identity
+cat > ~/.config/git/config.local << EOF
+[user]
+    name  = Your Name
+    email = you@example.com
+EOF
+
+# open nvim — plugins install automatically (~2-5 min first launch)
+nvim
+```
 
 ---
 
@@ -54,6 +71,7 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 ├── .zshenv                 sets ZDOTDIR=~/.config/zsh (only file at $HOME)
 └── .config/
     ├── fish/               Fish shell — conf.d, functions, abbreviations
+    ├── git/                Git — shared config + delta diff + global ignore
     ├── zsh/                Zsh — antidote plugins, aliases, completions
     ├── nvim/               Neovim — LazyVim + React/TS/Tailwind/ESLint/Prettier
     ├── tmux/               Tmux — keybindings, plugins, status bar
@@ -97,6 +115,8 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 | [vivid](https://github.com/sharkdp/vivid) | `LS_COLORS` theme generator |
 | [ouch](https://github.com/ouch-org/ouch) | Compress and decompress archives |
 | [jq](https://jqlang.github.io/jq) | JSON processor |
+| [watchman](https://facebook.github.io/watchman) | File watcher (React Native) |
+| [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) | Markdown linter |
 
 ### Yazi preview dependencies
 
@@ -112,11 +132,33 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 
 | Tool | Purpose |
 |---|---|
+| [node](https://nodejs.org) | System Node (for Mason/tooling) |
 | [fnm](https://github.com/Schniz/fnm) | Node version manager (installs LTS on setup) |
 | [pnpm](https://pnpm.io) | Node package manager |
 | [go](https://go.dev) | Go toolchain |
 | [pyenv](https://github.com/pyenv/pyenv) | Python version manager |
 | [rbenv](https://github.com/rbenv/rbenv) | Ruby version manager |
+
+### Neovim — via [LazyVim](https://lazyvim.org) + [Mason](https://github.com/mason-org/mason.nvim)
+
+| Layer | Tool | Purpose |
+|---|---|---|
+| LSP | vtsls | TypeScript / JavaScript |
+| LSP | eslint-lsp | ESLint linting |
+| LSP | tailwindcss-ls | Tailwind class completions |
+| LSP | cssls | CSS / SCSS |
+| LSP | html | HTML |
+| LSP | emmet_ls | Emmet snippets |
+| LSP | graphql-ls | GraphQL |
+| LSP | jsonls | JSON + schema validation |
+| LSP | yamlls | YAML (Docker Compose, CI configs) |
+| LSP | dockerls | Dockerfile |
+| LSP | marksman | Markdown |
+| Formatter | prettier | JS/TS/CSS/HTML/JSON/YAML |
+| Formatter | stylua | Lua |
+| Formatter | shfmt | Shell |
+| Tests | neotest + neotest-jest | Run Jest tests inline |
+| Theme | Catppuccin Mocha | Matches ghostty, tmux, yazi |
 
 ### Fish plugins — via [Fisher](https://github.com/jorgebucaran/fisher)
 
@@ -143,10 +185,11 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 | kutsan/zsh-system-clipboard | Vi-mode yank/paste ↔ system clipboard |
 | MichaelAquilina/zsh-you-should-use | Reminds you to use defined aliases |
 | mollifier/cd-gitroot | `cdg` — jump to git repo root |
-| ohmyzsh/tmux | Tmux session aliases + completions |
-| ohmyzsh/colored-man-pages | Colored `man` pages |
-| ohmyzsh/dotenv | Auto-source `.env` on `cd` |
-| ohmyzsh/magic-enter | Empty `Enter` → `eza -la` or `git status` |
+
+Native (no plugin needed):
+- **dotenv** — auto-source `.env` on `cd` with per-directory allow/deny list
+- **magic-enter** — empty `Enter` → `eza -la` or `git status`
+- **colored man pages** — via `LESS_TERMCAP_*` env vars
 
 ### Tmux plugins — via [TPM](https://github.com/tmux-plugins/tpm)
 
@@ -177,20 +220,21 @@ Open a new terminal when done. Zsh is the default shell with all plugins active.
 **Re-stow after adding or moving dotfiles:**
 
 ```bash
-# re-creates all symlinks from ~/.dotfiles to $HOME
 cd ~/.dotfiles && stow --target="$HOME" --restow .
 ```
 
 **Yazi plugins** — not installed by `install.sh`, run once manually:
 
 ```bash
-# reads ~/.config/yazi/package.toml and installs listed plugins
 ya pkg install
 ```
 
 **Machine-local config** — create once per machine, never committed:
 
 ```bash
-# add SDK paths, API tokens, local tools here
+# API tokens, SDK paths, local tool config
 ~/.config/zsh/.zshrc.local
+
+# git identity
+~/.config/git/config.local
 ```
