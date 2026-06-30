@@ -63,6 +63,18 @@ return {
     end,
   },
 
+  -- ensure Mason tools are installed on new machines
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "markdownlint-cli2",
+        "emmet-ls",
+        "graphql-language-service-cli",
+      },
+    },
+  },
+
   -- css + html + graphql + emmet LSPs
   {
     "neovim/nvim-lspconfig",
