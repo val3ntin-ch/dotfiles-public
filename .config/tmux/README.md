@@ -18,6 +18,47 @@ Tmux config split across four files, loaded by `tmux.conf`. Catppuccin Mocha the
 
 ---
 
+## How tmux is structured
+
+```
+┌─ tmux server (background process) ──────────────────────────────────────┐
+│                                                                          │
+│  ┌─ session: "work" ──────────────────────────────────────────────────┐ │
+│  │                                                                     │ │
+│  │  ┌─ window 1: nvim ──────────────────────────────┐                 │ │
+│  │  │                                                │                 │ │
+│  │  │  ┌─ pane ──────────┐  ┌─ pane ─────────────┐ │                 │ │
+│  │  │  │                 │  │                     │ │                 │ │
+│  │  │  │   neovim        │  │   terminal          │ │                 │ │
+│  │  │  │                 │  │                     │ │                 │ │
+│  │  │  └─────────────────┘  └─────────────────────┘ │                 │ │
+│  │  │         Ctrl+h/l to move between panes ───────►│                 │ │
+│  │  └────────────────────────────────────────────────┘                 │ │
+│  │                                                                     │ │
+│  │  ┌─ window 2: server ─────────────────────────────┐                │ │
+│  │  │  ┌─ pane ──────────────────────────────────┐   │                │ │
+│  │  │  │  yarn dev                               │   │                │ │
+│  │  │  └─────────────────────────────────────────┘   │                │ │
+│  │  └────────────────────────────────────────────────┘                │ │
+│  │                          <prefix> 1/2 to switch windows            │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+│                                                                          │
+│  ┌─ session: "project-b" ─────────────────────────────────────────────┐ │
+│  │  (separate project, isolated env, own windows + panes)             │ │
+│  └─────────────────────────────────────────────────────────────────────┘ │
+│                    <prefix> o → sesh picker to switch sessions           │
+└──────────────────────────────────────────────────────────────────────────┘
+```
+
+**Hierarchy:** server → sessions → windows → panes
+
+- **Server** — one background process, survives terminal close
+- **Session** — one project/context (e.g. one per repo). Detach with `<prefix> d`, reattach with `sesh`
+- **Window** — like a browser tab inside a session
+- **Pane** — split inside a window. Ctrl+h/j/k/l moves between panes AND nvim splits seamlessly
+
+---
+
 ## Prefix
 
 **`Ctrl+t`** (not the default `Ctrl+b`)
