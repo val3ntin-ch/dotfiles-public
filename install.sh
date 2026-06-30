@@ -18,7 +18,7 @@ step "Core tools"
 brew install \
   fish zsh starship antidote neovim git gh lazygit git-delta \
   stow tmux vivid ouch bat eza fnm pnpm go pyenv rbenv \
-  tree-sitter luarocks watchman
+  tree-sitter luarocks watchman node
 
 # ── 3. Yazi + required dependencies ──────────────────────────────────────────
 step "Yazi + dependencies"
