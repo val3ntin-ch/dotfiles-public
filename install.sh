@@ -4,6 +4,14 @@ set -euo pipefail
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 step() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
 
+# ── 0. Xcode CLI tools (C compiler for nvim-treesitter) ──────────────────────
+if ! xcode-select -p &>/dev/null; then
+  step "Xcode CLI tools"
+  xcode-select --install
+  echo "  Waiting for Xcode CLI tools to finish installing..."
+  until xcode-select -p &>/dev/null; do sleep 5; done
+fi
+
 # ── 1. Homebrew ───────────────────────────────────────────────────────────────
 step "Homebrew"
 if ! command -v brew &>/dev/null; then
