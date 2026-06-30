@@ -23,7 +23,8 @@ brew install \
 # ── 3. Yazi + required dependencies ──────────────────────────────────────────
 step "Yazi + dependencies"
 brew install \
-  yazi ffmpeg-full sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick-full
+  yazi ffmpeg-full sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick-full \
+  markdownlint-cli2
 brew link ffmpeg-full imagemagick-full -f --overwrite
 
 # ── 4. Sesh (custom tap) ──────────────────────────────────────────────────────
