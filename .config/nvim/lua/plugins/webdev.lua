@@ -32,16 +32,16 @@ return {
   -- show dotfiles by default in neo-tree
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      filesystem = {
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = false,
-          hide_hidden = false,
-        },
-      },
-    },
+    opts = function(_, opts)
+      opts.filesystem = opts.filesystem or {}
+      opts.filesystem.filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_hidden = false,
+      }
+      return opts
+    end,
   },
 
   -- auto-close and auto-rename JSX/HTML tags
