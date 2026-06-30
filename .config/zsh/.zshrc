@@ -168,6 +168,11 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 #   3. When you add a plugin to .zsh_plugins.txt, the next shell start
 #      detects the .txt is newer than .zsh and recompiles automatically
 
+# ZSH_CACHE_DIR must be set before antidote loads ohmyzsh plugins that rely on it
+# (e.g. dotenv plugin uses ${ZSH_CACHE_DIR:-$ZSH/cache} — without this, $ZSH is
+# unset and the path becomes the invalid /cache)
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+
 _antidote_home="${ANTIDOTE_HOME:-$XDG_DATA_HOME/antidote}"
 _antidote_bin="$_antidote_home/antidote.zsh"
 _plugins_txt="$ZDOTDIR/.zsh_plugins.txt"
@@ -638,7 +643,7 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # ── fnm (Fast Node Manager) ─────────────────────────────────────────────────
 # Auto-switches node version when entering a dir with .nvmrc / .node-version
-command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --log-level quiet)"
+command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --install-if-missing --log-level quiet)"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # § 9  MODULAR CONFIGS
