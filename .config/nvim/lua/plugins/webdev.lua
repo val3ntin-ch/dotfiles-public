@@ -1,4 +1,10 @@
 return {
+  -- disable latex rendering (not used, silences render-markdown + snacks warnings)
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = { latex = { enabled = false } },
+  },
+
   -- Catppuccin Mocha — matches ghostty, tmux, fish, yazi
   {
     "catppuccin/nvim",
