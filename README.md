@@ -5,7 +5,10 @@
 ## Install (macOS)
 
 ```bash
+# 1. clone the repo
 git clone https://github.com/val3ntin-ch/.dotfiles ~/.dotfiles
+
+# 2. run the bootstrap script (installs everything, stows dotfiles)
 ~/.dotfiles/install.sh
 ```
 
