@@ -48,20 +48,6 @@ return {
     end,
   },
 
-  -- extra Mason tools
-  {
-    "mason-org/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "prettier",
-        "eslint_d",
-        "css-lsp",
-        "html-lsp",
-        "graphql-language-service-cli",
-      },
-    },
-  },
-
   -- css + html + graphql LSPs
   {
     "neovim/nvim-lspconfig",
