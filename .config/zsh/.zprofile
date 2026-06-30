@@ -29,4 +29,4 @@ if command -v rbenv &>/dev/null; then
 fi
 
 # fnm — Node version manager (also in .zshrc for interactive shells)
-command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --install-if-missing --log-level quiet)"
+command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd)"

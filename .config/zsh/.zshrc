@@ -618,7 +618,7 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # ── fnm (Fast Node Manager) ─────────────────────────────────────────────────
 # Auto-switches node version when entering a dir with .nvmrc / .node-version
-command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --install-if-missing --log-level quiet)"
+command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd)"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # § 9  MODULAR CONFIGS
