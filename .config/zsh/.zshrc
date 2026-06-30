@@ -633,11 +633,8 @@ command -v starship &>/dev/null && eval "$(starship init zsh)"
 # `z foo bar` → matching both "foo" and "bar" in the path
 # `zi`        → opens fzf to fuzzy-pick from your history
 #
-# --cmd cd: makes `cd` itself use zoxide instead of creating a new `z` alias.
-# So your muscle memory still works — you type `cd projects` and zoxide
-# finds the right one even if you're not in the parent directory.
-#
-command -v zoxide &>/dev/null && eval "$(zoxide init zsh --cmd cd)"
+# `z foo`  → jump, `zi` → fzf picker
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # ── fnm (Fast Node Manager) ─────────────────────────────────────────────────
 # Auto-switches node version when entering a dir with .nvmrc / .node-version
