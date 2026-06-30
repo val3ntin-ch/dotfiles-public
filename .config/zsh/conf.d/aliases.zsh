@@ -152,7 +152,7 @@ alias gcf='git commit --fixup'                    # create fixup! commit for reb
 alias gsw='git switch'                            # switch branch
 alias gswc='git switch -c'                        # create + switch
 alias gswd='git switch -d'                        # switch to detached HEAD
-alias gswm='git switch $(git main-branch 2>/dev/null || echo main)'  # → main
+alias gswm='git switch $(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed "s|origin/||" || echo main)'  # → main
 alias gr='git restore'                            # restore file (discard changes)
 alias grs='git restore --staged'                  # unstage file
 
@@ -459,7 +459,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO && killall Finder'
   alias cleanup='find . -type f -name "*.DS_Store" -delete'
   alias update='brew update && brew upgrade && brew autoremove && brew cleanup'
-  alias brewdump='brew bundle dump --file=~/.dotfiles/Brewfile --force'  # save installed apps
+  alias brewdump='brew bundle dump --file="${DOTFILES_DIR:-$HOME/.dotfiles}/Brewfile" --force'  # save installed apps
   # Caffeinate: keep mac awake (optional N seconds)
   alias awake='caffeinate -d'
 fi

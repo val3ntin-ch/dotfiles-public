@@ -13,6 +13,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 
+# ── Dotfiles location ────────────────────────────────────────────────────
+export DOTFILES_DIR="$HOME/.dotfiles"
+
 # ── Antidote (plugin manager) ─────────────────────────────────────────────
 export ANTIDOTE_HOME="$XDG_DATA_HOME/antidote"
 
