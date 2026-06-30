@@ -1,0 +1,40 @@
+[core]
+	editor = nvim
+	pager = delta
+	autocrlf = input
+
+[init]
+	defaultBranch = main
+
+[push]
+	default = current
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Catppuccin Mocha
+
+[interactive]
+	diffFilter = delta --color-only
+
+[rerere]
+	enabled = true
+
+# Machine-specific identity (name, email) — not committed
+# Create ~/.config/git/config.local with:
+#   [user]
+#       name  = Your Name
+#       email = you@example.com
+[include]
+	path = ~/.config/git/config.local

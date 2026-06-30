@@ -73,6 +73,10 @@
 .config/yazi/plugins/
 .config/yazi/flavors/
 
+# ── git — machine-specific identity ──────────────────────────────────────────
+# Create this file with [user] name + email — never commit it
+.config/git/config.local
+
 # ── credentials / secrets ─────────────────────────────────────────────────────
 *.pem
 *.key

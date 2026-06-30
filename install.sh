@@ -18,7 +18,7 @@ step "Core tools"
 brew install \
   fish zsh starship antidote neovim git gh lazygit git-delta \
   stow tmux vivid ouch bat eza fnm pnpm go pyenv rbenv \
-  tree-sitter luarocks
+  tree-sitter luarocks watchman
 
 # ── 3. Yazi + required dependencies ──────────────────────────────────────────
 step "Yazi + dependencies"
@@ -38,6 +38,13 @@ brew install --cask ghostty font-jetbrains-mono-nerd-font font-symbols-only-nerd
 step "Stowing dotfiles"
 # back up any real dirs that would conflict with stow symlinks
 [[ -d "$HOME/.config/nvim" && ! -L "$HOME/.config/nvim" ]] && mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
+# ensure runtime dirs exist before first use
+mkdir -p \
+  "$HOME/.local/state/less" \
+  "$HOME/.local/state/zsh" \
+  "$HOME/.local/share/zsh" \
+  "$HOME/.cache/zsh" \
+  "$HOME/.config/git"
 (cd "$DOTFILES" && stow --target="$HOME" --restow .)
 
 # ── 7. Default shell → zsh ────────────────────────────────────────────────────
@@ -66,6 +73,12 @@ fnm install --lts
 
 printf '\n\033[1;32m✓ Done. Open a new terminal — zsh is your default shell.\033[0m\n'
 printf '  Next steps:\n'
-printf '    nvim                  → first launch installs all plugins (~2-5 min)\n'
-printf '    :LazyHealth           → verify everything is working\n'
-printf '    ya pkg install        → install yazi plugins (optional)\n\n'
+printf '    1. Set git identity (once per machine):\n'
+printf '       cat > ~/.config/git/config.local <<EOF\n'
+printf '       [user]\n'
+printf '           name  = Your Name\n'
+printf '           email = you@example.com\n'
+printf '       EOF\n'
+printf '    2. nvim                  → first launch installs all plugins (~2-5 min)\n'
+printf '    3. :LazyHealth           → verify everything is working\n'
+printf '    4. ya pkg install        → install yazi plugins (optional)\n\n'
