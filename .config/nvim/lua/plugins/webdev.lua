@@ -5,6 +5,14 @@ return {
     opts = { latex = { enabled = false } },
   },
 
+  -- disable snacks auto-generating a lazygit theme — use our ~/.config/lazygit/config.yml
+  {
+    "folke/snacks.nvim",
+    opts = {
+      lazygit = { configure = false },
+    },
+  },
+
   -- Catppuccin Mocha — matches ghostty, tmux, fish, yazi
   {
     "catppuccin/nvim",
