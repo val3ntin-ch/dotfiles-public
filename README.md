@@ -1,8 +1,5 @@
 # dotfiles
 
-macOS terminal setup. Catppuccin Mocha theme across all layers.  
-Symlinks managed by [GNU Stow](https://www.gnu.org/software/stow/).
-
 ---
 
 ## Install (macOS)
