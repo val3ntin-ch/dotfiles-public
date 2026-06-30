@@ -71,7 +71,7 @@ tmux kill-session -t _setup 2>/dev/null || true
 step "Node LTS"
 eval "$(fnm env --log-level quiet)"
 fnm install --lts
-npm install -g neovim
+npm install -g neovim tree-sitter-cli
 
 printf '\n\033[1;32m✓ Done. Open a new terminal — zsh is your default shell.\033[0m\n'
 printf '  Next steps:\n'
