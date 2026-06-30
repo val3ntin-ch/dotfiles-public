@@ -344,11 +344,8 @@ Managed by **Antidote**. Source of truth: `.zsh_plugins.txt`.
 | 8 | `kutsan/zsh-system-clipboard` | Vi-mode `y`/`d`/`p` interact with the system clipboard, not just ZSH's kill ring | Auto-detects pbcopy (macOS), xclip/xsel (X11), wl-copy (Wayland) |
 | 9 | `MichaelAquilina/zsh-you-should-use` | After running a command, reminds you if an alias exists for it | Trains alias muscle memory. Configured with `YSU_MESSAGE_POSITION=after` |
 | 10 | `mollifier/cd-gitroot` | `cdg` — jump to the root of the current git repo instantly | Complements `groot` alias; useful when deep in nested directories |
-| 11 | `ohmyzsh/ohmyzsh path:plugins/git` | Tab completion for git subcommands, branches, remotes, tags, stashes, worktrees | Takes only the git plugin from OMZ — not the whole framework |
-| 12 | `ohmyzsh/ohmyzsh path:plugins/tmux` | Tab completion for tmux session names on `ta`/`ts` | From original setup. Completions stack with our own aliases |
-| 13 | `ohmyzsh/ohmyzsh path:plugins/colored-man-pages` | Colours man page sections, flags, descriptions | Works alongside `MANPAGER=bat` for double coverage |
-| 14 | `ohmyzsh/ohmyzsh path:plugins/dotenv` | Auto-sources `.env` when you `cd` into a directory | Asks confirmation first time (security). Good for per-project env vars |
-| 15 | `ohmyzsh/ohmyzsh path:plugins/magic-enter` | Press `Enter` on empty prompt → runs `git status` in a repo, `eza -la` elsewhere | Saves the most common "what's here?" command |
+| 11 | `conf.d/dotenv.zsh` (native) | Auto-sources `.env` when you `cd` into a directory | Asks confirmation first time. Allow/deny lists in `~/.cache/zsh/` (proper XDG paths) |
+| 12 | `conf.d/magic-enter.zsh` (native) | Press `Enter` on empty prompt → `git status` in a repo, `eza -la` elsewhere | Saves the most common "what's here?" command |
 
 **Fallback note:** Plugin #2 can be swapped back to `zsh-users/zsh-syntax-highlighting`
 by commenting out `zdharma-continuum/fast-syntax-highlighting` and uncommenting the

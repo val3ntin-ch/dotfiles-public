@@ -9,7 +9,7 @@
 # Syntax:
 #   author/repo                     load the default plugin file
 #   author/repo kind:fpath          add to $fpath only (for completions)
-#   author/repo path:subdir         load from subdir (OMZ plugins)
+#   author/repo path:subdir         load from subdir
 #   author/repo branch:next         pin a branch
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -90,31 +90,4 @@ MichaelAquilina/zsh-you-should-use
 # Useful when you're deep in src/components/ui/ and want the repo root.
 mollifier/cd-gitroot
 
-# ── 11. TMUX PLUGIN (OMZ) ─────────────────────────────────────────────────
-# From your original setup. Provides:
-#   • ta = tmux attach-session (with completion on session names)
-#   • ts = tmux new-session
-#   • tl = tmux list-sessions
-#   • tksv = tmux kill-server
-#   • tkss = tmux kill-session
-# Our aliases.zsh defines these too — OMZ plugin adds the completions.
-# Having both is safe; our aliases.zsh definitions win (loaded after this).
-ohmyzsh/ohmyzsh path:plugins/tmux
-
-# ── 13. COLORED-MAN-PAGES (OMZ) ───────────────────────────────────────────
-# Colors man pages using ANSI escapes. Pairs with bat's MANPAGER config.
-# Without this: monochrome wall of text. With this: section headers, flags,
-# and descriptions all get distinct colors.
-ohmyzsh/ohmyzsh path:plugins/colored-man-pages
-
-# ── 14. DOTENV (OMZ) ──────────────────────────────────────────────────────
-# Auto-sources .env files when you cd into a directory.
-# Asks for confirmation the first time (security check — you approve new .env).
-# Useful for per-project environment variables (API keys, DATABASE_URL, etc.)
-ohmyzsh/ohmyzsh path:plugins/dotenv
-
-# ── 14. MAGIC ENTER ───────────────────────────────────────────────────────
-# Press Enter on an empty prompt → runs `eza -la` (or `git status` in a repo).
-# Saves typing the most common "what's here?" command.
-# Highly ergonomic for a daily workflow.
-ohmyzsh/ohmyzsh path:plugins/magic-enter
+# (tmux completions provided by zsh-users/zsh-completions above)

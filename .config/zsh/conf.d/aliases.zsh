@@ -448,13 +448,6 @@ alias -g JSON='| python3 -m json.tool'           # pretty-print JSON
 alias -g COPY='| pbcopy'                         # copy to clipboard (macOS)
 
 # ══════════════════════════════════════════════════════════════════════════════
-# MAGIC ENTER config (ohmyzsh magic-enter plugin)
-# ══════════════════════════════════════════════════════════════════════════════
-# What to run on empty Enter in a git repo vs a plain directory
-MAGIC_ENTER_GIT_COMMAND='git status -sb && echo && git log --oneline -5'
-MAGIC_ENTER_OTHER_COMMAND='eza --icons=always --group-directories-first --color=always -la --git'
-
-# ══════════════════════════════════════════════════════════════════════════════
 # PLATFORM-SPECIFIC
 # ══════════════════════════════════════════════════════════════════════════════
 
