@@ -48,7 +48,7 @@ return {
     end,
   },
 
-  -- css + html + graphql LSPs
+  -- css + html + graphql + emmet LSPs
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -56,6 +56,13 @@ return {
         cssls = {},
         html = {},
         graphql = {},
+        emmet_ls = {
+          filetypes = {
+            "html", "css", "scss",
+            "javascript", "javascriptreact",
+            "typescript", "typescriptreact",
+          },
+        },
       },
     },
   },
