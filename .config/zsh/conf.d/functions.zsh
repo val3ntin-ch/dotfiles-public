@@ -324,12 +324,10 @@ tdev() {
 # NODE / JS FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
-# nvmuse — read .nvmrc/.node-version and switch (works with fnm or nvm)
+# nvmuse — read .nvmrc/.node-version and switch via fnm
 nvmuse() {
-  if command -v fnm &>/dev/null && [[ -f ".nvmrc" || -f ".node-version" ]]; then
-    fnm use --log-level quiet
-  elif command -v nvm &>/dev/null && [[ -f ".nvmrc" ]]; then
-    nvm use
+  if [[ -f ".nvmrc" || -f ".node-version" ]]; then
+    fnm use --install-if-missing --log-level quiet
   else
     echo "no .nvmrc / .node-version in current directory"
   fi

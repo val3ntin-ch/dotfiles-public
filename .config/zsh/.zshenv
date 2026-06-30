@@ -74,12 +74,6 @@ if [[ -d "$HOME/Library/Android/sdk" ]]; then
   export PATH="$ANDROID_HOME/platform-tools:$PATH"
 fi
 
-# ── NVM (Node Version Manager) ────────────────────────────────────────────
-# NVM_DIR must be set in .zshenv so it's visible to scripts.
-# The actual `nvm` function is loaded in .zprofile (it sources a slow script).
-# We do NOT source nvm.sh here — that's done in .zprofile for login shells.
-export NVM_DIR="$HOME/.nvm"
-
 # ── Git editor ────────────────────────────────────────────────────────────
 # GIT_EDITOR overrides $EDITOR specifically for git commit messages, rebases, etc.
 # Kept separate from $EDITOR so you can override just git's editor independently.
@@ -120,8 +114,3 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range=:100 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --icons --tree --level=2 --color=always {}'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window=down:3:wrap"
 
-# ── envman ─────────────────────────────────────────────────────────────────
-# envman manages environment variables set by tools like mise, asdf, etc.
-# It writes to ~/.config/envman/load.sh — sourcing it here makes those vars
-# available to all shells including non-interactive scripts.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

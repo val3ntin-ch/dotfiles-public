@@ -28,8 +28,7 @@ and Linux. Every file lives in `~/.config/zsh/` — tracked by git via GNU Stow.
 9. [Environment variables](#environment-variables)
 10. [Install & first run](#install--first-run)
 11. [Adding a new plugin](#adding-a-new-plugin)
-12. [Migrating from NVM to fnm](#migrating-from-nvm-to-fnm)
-13. [Profiling startup time](#profiling-startup-time)
+12. [Profiling startup time](#profiling-startup-time)
 
 ---
 
@@ -73,7 +72,7 @@ Every shell (scripts, SSH, cron, interactive):
   2. $ZDOTDIR/.zshenv       → PATH, env vars, exports
 
 Login shells only (first terminal open, SSH session):
-  3. $ZDOTDIR/.zprofile     → brew shellenv, nvm, version managers
+  3. $ZDOTDIR/.zprofile     → brew shellenv, fnm, version managers
 
 Interactive shells (every new tab, pane, exec zsh):
   4. $ZDOTDIR/.zshrc        → everything else: plugins, aliases, prompt
@@ -134,15 +133,12 @@ Rule: **no subprocess forks, no eval, no output**. Pure variable assignments onl
 | `GOPATH` | `~/.local/share/go` | XDG-compliant Go workspace |
 | `JAVA_HOME` | `/Library/.../zulu-17.jdk/...` | React Native Android builds. Guard-checked — no-op if path absent |
 | `ANDROID_HOME` | `~/Library/Android/sdk` | React Native Android. Guard-checked. Adds `emulator` + `platform-tools` to PATH |
-| `NVM_DIR` | `~/.nvm` | Set here so scripts can read it. `nvm.sh` itself loads in `.zprofile` |
 | `BAT_THEME` | `Catppuccin Mocha` | Syntax highlight theme for bat / MANPAGER |
 | `RIPGREP_CONFIG_PATH` | `~/.config/ripgrep/config` | rg reads this file for default flags |
 | `FZF_DEFAULT_OPTS` | Catppuccin Mocha colours + layout | All fzf invocations inherit this |
 | `FZF_DEFAULT_COMMAND` | `fd --type f --hidden ...` | fzf uses fd instead of find |
 | `FZF_CTRL_T_OPTS` | bat file preview | Ctrl-T file picker has a preview panel |
 | `FZF_ALT_C_OPTS` | eza tree preview | Alt-C dir picker has a tree preview |
-| `envman` | sources `~/.config/envman/load.sh` | Tool-managed env vars (mise, asdf, etc.) |
-
 ---
 
 ### `$ZDOTDIR/.zprofile` (`~/.config/zsh/.zprofile`)
@@ -155,16 +151,12 @@ so we don't want them running for every new tmux pane.
 `INFOPATH`, `MANPATH`. Uses hardcoded paths because `HOMEBREW_PREFIX` from `.zshenv`
 may not be in the environment at this point on a fresh shell.
 
-**NVM** — sources `$NVM_DIR/nvm.sh` (~3000 lines, 40-80ms). Loaded here so each new
-tmux pane doesn't pay the cost. `NVM_DIR` is already exported from `.zshenv` so
-scripts can find it. `bash_completion` adds Tab completion for `nvm` subcommands.
-
 **pyenv** — `eval "$(pyenv init -)"` — Python version manager, login shell only.
 
 **rbenv** — `eval "$(rbenv init -)"` — Ruby version manager, login shell only.
 
-**fnm** — Fast Node Manager. Only activates if nvm is **not** present (guard check).
-If you migrate from nvm to fnm, remove the NVM block and fnm takes over.
+**fnm** — Node version manager. `eval "$(fnm env --use-on-cd --install-if-missing)"` —
+auto-switches Node version on `cd`, auto-installs missing versions.
 
 ---
 
@@ -271,8 +263,8 @@ vivid (catppuccin-mocha theme)
 #### § 8 — Tools init
 
 - `starship init zsh` — cross-shell prompt. Reads `~/.config/starship.toml` (shared with Fish)
-- `zoxide init zsh --cmd cd` — replaces `cd` with zoxide's frecency-aware version
-- `fnm env --use-on-cd` — auto-switches Node version on directory change (if fnm installed)
+- `zoxide init zsh` — adds `z` (frecency jump) and `zi` (fzf picker)
+- `fnm env --use-on-cd --install-if-missing` — auto-switches Node version on `cd`, auto-installs missing versions
 
 #### § 9-12 — Modular configs + local override
 
@@ -701,7 +693,7 @@ All functions live in `conf.d/functions.zsh` and `conf.d/git.zsh`.
 
 | Function | Usage | What it does |
 |---|---|---|
-| `nvmuse` | `nvmuse` | Read `.nvmrc`/`.node-version` → switch via nvm or fnm |
+| `nvmuse` | `nvmuse` | Read `.nvmrc`/`.node-version` → switch via fnm (auto-installs if missing) |
 | `pnscript` | `pnscript` | Parse `package.json` scripts → fzf picker → run selected |
 
 ### System
@@ -816,15 +808,12 @@ Quick reference — where each important variable is set and why.
 | `EDITOR` / `VISUAL` | `.zshenv` | `nvim` |
 | `GIT_EDITOR` | `.zshenv` | `nvim` |
 | `HISTFILE` | `.zshenv` | `~/.local/state/zsh/history` |
-| `NVM_DIR` | `.zshenv` | `~/.nvm` (var only — nvm.sh loads in .zprofile) |
 | `JAVA_HOME` | `.zshenv` | Zulu JDK 17 path (guard-checked) |
 | `ANDROID_HOME` | `.zshenv` | `~/Library/Android/sdk` (guard-checked) |
 | `HOMEBREW_PREFIX` | `.zshenv` | `/opt/homebrew` or `/usr/local` |
 | `BAT_THEME` | `.zshenv` | `Catppuccin Mocha` |
 | `FZF_DEFAULT_OPTS` | `.zshenv` | Catppuccin colours + layout |
 | `ANTIDOTE_HOME` | `.zshenv` | `~/.local/share/antidote` |
-| `MAGIC_ENTER_GIT_COMMAND` | `aliases.zsh` | `git status -sb && git log --oneline -5` |
-| `MAGIC_ENTER_OTHER_COMMAND` | `aliases.zsh` | `eza -la --git` |
 | `ZSH_AUTOSUGGEST_STRATEGY` | `.zshrc §6` | `(history completion)` |
 | `ZVM_VI_INSERT_ESCAPE_BINDKEY` | `.zshrc §5` | `jk` |
 | `GIT_PAGER` | `git.zsh` | `delta` |
@@ -839,27 +828,6 @@ Quick reference — where each important variable is set and why.
    ```
 2. Open a new shell — antidote detects `.txt` is newer than `.zsh`, recompiles automatically.
 3. Configure the plugin in `.zshrc §6` if needed.
-
----
-
-## Migrating from NVM to fnm
-
-fnm is ~10× faster than nvm (Rust-based, no 3000-line shell script at startup).
-
-```bash
-# Install
-brew install fnm          # macOS
-# or: curl -fsSL https://fnm.vercel.app/install | bash   # Linux
-
-# Migrate your Node versions
-fnm install --lts
-
-# In .zprofile: comment out the NVM block
-# [ -s "$NVM_DIR/nvm.sh" ] ...    ← comment these two lines out
-
-# fnm block already there and will activate automatically
-# (the guard check [[ -z "$NVM_DIR" || ... ]] prevents double-loading)
-```
 
 ---
 
